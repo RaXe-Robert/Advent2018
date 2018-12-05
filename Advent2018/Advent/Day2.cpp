@@ -19,12 +19,15 @@ void Day2::Solve()
 		exit(1);
 	}
 	
-	map<char, int> charOccurrences;
+	int doubleCounter = 0;
+	int tripleCounter = 0;
 
 	string line;
 	while (inFile >> line) {
 
 		cout << line << endl;
+
+		map<char, int> charOccurrences;
 
 		for (auto& x : line) {
 			auto iterator = charOccurrences.find(x);
@@ -34,9 +37,27 @@ void Day2::Solve()
 			else {
 				charOccurrences.insert(make_pair(x, 1));
 			}
-			cout << charOccurrences[x];
+		}
+
+		bool countedDouble = false;
+		bool countedTriple = false;
+
+		map<char, int>::iterator it;
+		for (it = charOccurrences.begin(); it != charOccurrences.end(); it++)
+		{
+			if (it->second == 2 && !countedDouble) {
+				doubleCounter++;
+				countedDouble = true;
+			}
+
+			if (it->second == 3 && !countedTriple) {
+				tripleCounter++;
+				countedTriple = true;
+			}
 		}
 	}
+
+	cout << "Answer: " << doubleCounter * tripleCounter << endl;
 
 	inFile.close();
 }
