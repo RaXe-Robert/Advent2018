@@ -1,8 +1,8 @@
 #include "Day2.h"
+#include "Helper.h"
 
-#include <iostream>
 #include <vector>
-#include <fstream>
+#include <iostream>
 #include <map>
 #include <string>
 
@@ -16,18 +16,12 @@ void Day2::Part1()
 {
 	cout << "Day2 part 1" << endl;
 		
-	ifstream inFile("D:\\input2.txt");
-
-	if (!inFile) {
-		cerr << "Unable to open file input2.txt" << endl;
-		exit(1);
-	}
+	vector<string> data = Helper::ReadFileToStringVector("D:\\input2.txt");
 
 	int doubleCounter = 0;
 	int tripleCounter = 0;
 
-	string line;
-	while (inFile >> line) {
+	for (auto& line : data) {
 
 		cout << line << endl;
 
@@ -62,29 +56,13 @@ void Day2::Part1()
 	}
 
 	cout << "Answer: " << doubleCounter * tripleCounter << endl;
-
-	inFile.close();
 }
 
 void Day2::Part2()
 {
 	cout << "Day2 part 2" << endl;
 
-	ifstream inFile("D:\\input2.txt");
-
-	if (!inFile) {
-		cerr << "Unable to open file input2.txt" << endl;
-		exit(1);
-	}
-
-	// Map file to vector for convenience
-	string line;
-	vector<string> data;
-	while (inFile >> line) {
-		data.push_back(line);
-	}
-
-	inFile.close();
+	vector<string> data = Helper::ReadFileToStringVector("D:\\input2.txt");
 
 	for (size_t x = 0; x != data.size(); ++x) {
 		// Compare against all other strings, except for itself

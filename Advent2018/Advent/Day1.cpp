@@ -1,4 +1,5 @@
 #include "Day1.h"
+#include "Helper.h"
 
 #include <iostream>
 #include <algorithm>
@@ -11,9 +12,11 @@ using namespace std;
 https://adventofcode.com/2018/day/1
 */
 
-void Day1::Solve()
+void Day1::Part2()
 {
 	cout << "Day1 part 2" << endl;
+
+	vector<int> data = Helper::ReadFileToIntVector("D:\\input.txt");
 
 	vector<int> numbers = { 0 };
 
@@ -23,18 +26,11 @@ void Day1::Solve()
 	int amountOfLoops = 0;
 
 	while (!foundPair) {
-
-		ifstream inFile("D:\\input.txt");
-
-		if (!inFile) {
-			cerr << "Unable to open file input.txt" << endl;
-			exit(1);
-		}
-
 		cout << "STARTING LOOP: " << ++amountOfLoops << endl;
-		int x;
 
-		while (inFile >> x && !foundPair) {
+		for (auto& x : data) {
+			if (foundPair)
+				break;
 
 			int newFrequency = currentFrequency + x;
 
@@ -47,7 +43,5 @@ void Day1::Solve()
 			numbers.push_back(newFrequency);
 			currentFrequency = newFrequency;
 		}
-
-		inFile.close();
 	}
 }
