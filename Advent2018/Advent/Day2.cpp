@@ -1,14 +1,18 @@
 #include "Day2.h"
 
 #include <iostream>
-#include <algorithm>
+#include <vector>
 #include <fstream>
 #include <map>
 #include <string>
 
 using namespace std;
 
-void Day2::Solve()
+/*
+https://adventofcode.com/2018/day/2
+*/
+
+void Day2::Part1()
 {
 	cout << "Day2 part 1" << endl;
 		
@@ -18,7 +22,7 @@ void Day2::Solve()
 		cerr << "Unable to open file input2.txt" << endl;
 		exit(1);
 	}
-	
+
 	int doubleCounter = 0;
 	int tripleCounter = 0;
 
@@ -60,4 +64,52 @@ void Day2::Solve()
 	cout << "Answer: " << doubleCounter * tripleCounter << endl;
 
 	inFile.close();
+}
+
+void Day2::Part2()
+{
+	cout << "Day2 part 2" << endl;
+
+	ifstream inFile("D:\\input2.txt");
+
+	if (!inFile) {
+		cerr << "Unable to open file input2.txt" << endl;
+		exit(1);
+	}
+
+	// Map file to vector for convenience
+	string line;
+	vector<string> data;
+	while (inFile >> line) {
+		data.push_back(line);
+	}
+
+	inFile.close();
+
+	for (size_t x = 0; x != data.size(); ++x) {
+		// Compare against all other strings, except for itself
+		for (size_t y = 0; y != data.size(); ++y) {
+			if (x == y)
+				continue;
+
+			int differenceCount = 0;
+			string result = "";
+
+			// Compare characters
+			for (int i = 0; i < data[x].size(); i++) {
+				if (data[x][i] != data[y][i])
+					differenceCount++;
+				else
+					result += data[x][i];
+
+				if (differenceCount > 1)
+					break;
+			}
+
+			if (differenceCount == 1) {
+				cout << "Answer: " << result << endl;
+				return;
+			}
+		}
+	}
 }

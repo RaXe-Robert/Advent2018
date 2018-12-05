@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/*
+https://adventofcode.com/2018/day/1
+*/
+
 void Day1::Solve()
 {
 	cout << "Day1 part 2" << endl;
