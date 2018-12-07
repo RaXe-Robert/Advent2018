@@ -26,7 +26,6 @@ void Day3::Part1()
 	map<int, map<int, int>> fabricClaims;
 
 	for (auto& line : data) {
-		cout << line << endl;
 		if (regex_match(line, base_match, base_regex))
 		{
 			int number = stoi(base_match[1]); // number
@@ -41,7 +40,7 @@ void Day3::Part1()
 				if (it == fabricClaims.end())
 					fabricClaims.insert(make_pair(x, map<int, int>()));
 
-				map<int, int> row = fabricClaims.at(x);
+				map<int, int>& row = fabricClaims.at(x);
 				for (int y = dataY; y < dataY + widthY; y++) {
 					auto rowIt = row.find(y);
 					if (rowIt == row.end()) {
@@ -50,13 +49,21 @@ void Day3::Part1()
 					else {
 						rowIt->second += 1;
 					}
-
 				}
 			}
 		}
-		else
-			cout << "oops" << endl;
 	}
+	
+	int count = 0;
+
+	for (auto const& x : fabricClaims) {
+		for (auto const& y : x.second) {
+			if (y.second >= 2)
+				count++;
+		}
+	}
+
+	cout << "Answer: " << count << endl;
 }
 
 void Day3::Part2()
