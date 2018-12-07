@@ -22,7 +22,7 @@ vector<string> Helper::ReadFileToStringVector(string filepath)
 	// Map file to vector for convenience
 	string line;
 	vector<string> data;
-	while (inFile >> line) {
+	while (getline(inFile, line)) {
 		data.push_back(line);
 	}
 
@@ -33,17 +33,17 @@ vector<string> Helper::ReadFileToStringVector(string filepath)
 
 vector<int> Helper::ReadFileToIntVector(string filepath)
 {
-	ifstream inFile(filepath);
+	ifstream inFile(filepath, true);
 
 	if (!inFile) {
 		cerr << "Unable to open file @" << filepath << endl;
 	}
 
 	// Map file to vector for convenience
-	int line;
+	string line;
 	vector<int> data;
-	while (inFile >> line) {
-		data.push_back(line);
+	while (getline(inFile, line)) {
+		data.push_back(stoi(line));
 	}
 
 	inFile.close();
