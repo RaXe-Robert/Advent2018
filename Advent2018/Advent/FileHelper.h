@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Helper
+class FileHelper
 {
 	public:
 

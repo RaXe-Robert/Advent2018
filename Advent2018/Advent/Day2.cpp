@@ -1,5 +1,5 @@
 #include "Day2.h"
-#include "Helper.h"
+#include "FileHelper.h"
 
 #include <vector>
 #include <iostream>
@@ -16,7 +16,7 @@ void Day2::Part1()
 {
 	cout << "Day2 part 1" << endl;
 		
-	vector<string> data = Helper::ReadFileToStringVector("D:\\input2.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input2.txt");
 
 	int doubleCounter = 0;
 	int tripleCounter = 0;
@@ -62,7 +62,7 @@ void Day2::Part2()
 {
 	cout << "Day2 part 2" << endl;
 
-	vector<string> data = Helper::ReadFileToStringVector("D:\\input2.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input2.txt");
 
 	for (size_t x = 0; x != data.size(); ++x) {
 		// Compare against all other strings, except for itself

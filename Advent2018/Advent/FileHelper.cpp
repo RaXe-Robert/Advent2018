@@ -1,4 +1,4 @@
-#include "Helper.h"
+#include "FileHelper.h"
 
 #include <fstream>
 #include <iostream>
@@ -11,7 +11,7 @@ using namespace std;
 TODO: Generics?
 */
 
-vector<string> Helper::ReadFileToStringVector(string filepath)
+vector<string> FileHelper::ReadFileToStringVector(string filepath)
 {
 	ifstream inFile(filepath);
 
@@ -31,7 +31,7 @@ vector<string> Helper::ReadFileToStringVector(string filepath)
 	return data;
 }
 
-vector<int> Helper::ReadFileToIntVector(string filepath)
+vector<int> FileHelper::ReadFileToIntVector(string filepath)
 {
 	ifstream inFile(filepath, true);
 

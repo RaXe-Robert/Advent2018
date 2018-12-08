@@ -1,4 +1,4 @@
-#include "Day3.h"
+#include "Day4.h"
 #include "FileHelper.h"
 
 #include <iostream>
@@ -11,10 +11,10 @@
 using namespace std;
 
 /*
-https://adventofcode.com/2018/day/3
+https://adventofcode.com/2018/day/4
 */
 
-void Day3::Part1()
+void Day4::Part1()
 {
 	cout << "Day3 part 1" << endl;
 
@@ -50,7 +50,7 @@ void Day3::Part1()
 			}
 		}
 	}
-	
+
 	int count = 0;
 
 	for (auto const& x : fabricClaims) {
@@ -63,7 +63,7 @@ void Day3::Part1()
 	cout << "Answer: " << count << endl;
 }
 
-void Day3::Part2()
+void Day4::Part2()
 {
 	cout << "Day3 part 2" << endl;
 
@@ -91,7 +91,7 @@ void Day3::Part2()
 				for (int y = dataY; y < maxY; y++) {
 					if (row.find(y) == row.end())
 						row.insert(make_pair(y, vector<int>()));
-	
+
 					if (numberHasOverlap.find(number) == numberHasOverlap.end())
 						numberHasOverlap.insert(make_pair(number, false));
 

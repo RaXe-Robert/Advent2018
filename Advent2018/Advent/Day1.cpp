@@ -1,5 +1,5 @@
 #include "Day1.h"
-#include "Helper.h"
+#include "FileHelper.h"
 
 #include <iostream>
 #include <algorithm>
@@ -16,7 +16,7 @@ void Day1::Part2()
 {
 	cout << "Day1 part 2" << endl;
 
-	vector<int> data = Helper::ReadFileToIntVector("D:\\input.txt");
+	vector<int> data = FileHelper::ReadFileToIntVector("D:\\input.txt");
 
 	vector<int> numbers = { 0 };
 
