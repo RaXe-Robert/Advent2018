@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DateTime.h" />
     <ClInclude Include="Day1.h" />
     <ClInclude Include="Day2.h" />
     <ClInclude Include="Day3.h" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Advent.cpp" />
+    <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="Day1.cpp" />
     <ClCompile Include="Day2.cpp" />
     <ClCompile Include="Day3.cpp" />
