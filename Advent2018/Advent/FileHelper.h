@@ -11,4 +11,5 @@ class FileHelper
 
 	static vector<string> ReadFileToStringVector(string filepath);
 	static vector<int> ReadFileToIntVector(string filepath);
+	static string ReadFileToString(string filepath);
 };

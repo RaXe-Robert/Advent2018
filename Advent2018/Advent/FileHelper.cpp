@@ -50,3 +50,22 @@ vector<int> FileHelper::ReadFileToIntVector(string filepath)
 
 	return data;
 }
+
+string FileHelper::ReadFileToString(string filepath)
+{
+	ifstream inFile(filepath, true);
+
+	if (!inFile) {
+		cerr << "Unable to open file @" << filepath << endl;
+	}
+
+	string line;
+	string data;
+	while (getline(inFile, line)) {
+		data += line;
+	}
+
+	inFile.close();
+
+	return data;
+}
