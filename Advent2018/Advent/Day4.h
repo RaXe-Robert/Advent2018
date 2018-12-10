@@ -6,9 +6,7 @@ class Day4
 {
 public:
 
-	static void Part1();
-
-	static void Part2();
+	static void Solve();
 
 private:
 
