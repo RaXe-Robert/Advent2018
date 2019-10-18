@@ -13,7 +13,7 @@ static std::string excludeCharacter(std::string polymer, char character);
 
 void day05(input_t input)
 {
-	string polymer = FileHelper::ReadFileToString("D:\\input5.txt");
+	string polymer = FileHelper::ReadFileToString("./input/day05.txt");
 	vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 	int result = solvePolymer(polymer);

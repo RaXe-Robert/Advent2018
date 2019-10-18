@@ -27,7 +27,7 @@ void part1()
 {
 	cout << "Day3 part 1" << endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input3.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
 
 	regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	smatch base_match;
@@ -76,7 +76,7 @@ void part2()
 {
 	cout << "Day3 part 2" << endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input3.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
 
 	regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	smatch base_match;

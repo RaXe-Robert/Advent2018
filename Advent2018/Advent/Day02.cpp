@@ -25,7 +25,7 @@ void part1()
 {
 	cout << "Day2 part 1" << endl;
 		
-	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input2.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("./input/day02.txt");
 
 	int doubleCounter = 0;
 	int tripleCounter = 0;
@@ -71,7 +71,7 @@ void part2()
 {
 	cout << "Day2 part 2" << endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input2.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("./input/day02.txt");
 
 	for (size_t x = 0; x != data.size(); ++x) {
 		// Compare against all other strings, except for itself

@@ -47,11 +47,11 @@ struct Guard {
 	}
 };
 
-void day04()
+void day04(input_t input)
 {
 	cout << "Day4 part 1" << endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("D:\\input4.txt");
+	vector<string> data = FileHelper::ReadFileToStringVector("./input/day04.txt");
 
 	regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
 	regex guard_regex("(\\w+) \\#(\\d+)");
