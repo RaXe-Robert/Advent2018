@@ -152,22 +152,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DateTime.h" />
-    <ClInclude Include="Day1.h" />
-    <ClInclude Include="Day2.h" />
-    <ClInclude Include="Day3.h" />
-    <ClInclude Include="Day4.h" />
-    <ClInclude Include="Day5.h" />
     <ClInclude Include="FileHelper.h" />
+    <ClInclude Include="advent2018.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Advent.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="DateTime.cpp" />
-    <ClCompile Include="Day1.cpp" />
-    <ClCompile Include="Day2.cpp" />
-    <ClCompile Include="Day3.cpp" />
-    <ClCompile Include="Day4.cpp" />
-    <ClCompile Include="Day5.cpp" />
+    <ClCompile Include="Day01.cpp" />
+    <ClCompile Include="Day02.cpp" />
+    <ClCompile Include="Day03.cpp" />
+    <ClCompile Include="Day04.cpp" />
+    <ClCompile Include="Day05.cpp" />
     <ClCompile Include="FileHelper.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,7 +173,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\input.txt" />
+    <Text Include="Input\day01.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

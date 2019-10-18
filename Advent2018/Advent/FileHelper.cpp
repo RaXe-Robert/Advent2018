@@ -1,11 +1,11 @@
 #include "FileHelper.h"
 
+#include <windows.h>
 #include <fstream>
+#include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector>
-
-using namespace std;
 
 /*
 TODO: Generics?
@@ -13,6 +13,7 @@ TODO: Generics?
 
 vector<string> FileHelper::ReadFileToStringVector(string filepath)
 {
+
 	ifstream inFile(filepath);
 
 	if (!inFile) {

@@ -1,4 +1,4 @@
-#include "Day3.h"
+#include "advent2018.h"
 #include "FileHelper.h"
 
 #include <iostream>
@@ -14,7 +14,16 @@ using namespace std;
 https://adventofcode.com/2018/day/3
 */
 
-void Day3::Part1()
+static void part1();
+static void part2();
+
+void day03(input_t input)
+{
+	part1();
+	part2();
+}
+
+void part1()
 {
 	cout << "Day3 part 1" << endl;
 
@@ -63,7 +72,7 @@ void Day3::Part1()
 	cout << "Answer: " << count << endl;
 }
 
-void Day3::Part2()
+void part2()
 {
 	cout << "Day3 part 2" << endl;
 

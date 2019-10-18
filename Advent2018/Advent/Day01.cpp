@@ -1,4 +1,5 @@
-#include "Day1.h"
+#include "advent2018.h"
+
 #include "FileHelper.h"
 
 #include <iostream>
@@ -6,17 +7,15 @@
 #include <fstream>
 #include <vector>
 
-using namespace std;
-
 /*
 https://adventofcode.com/2018/day/1
 */
 
-void Day1::Part2()
+void day01(input_t input)
 {
 	cout << "Day1 part 2" << endl;
 
-	vector<int> data = FileHelper::ReadFileToIntVector("D:\\input.txt");
+	vector<int> data = FileHelper::ReadFileToIntVector("./input/day01.txt");
 
 	vector<int> numbers = { 0 };
 

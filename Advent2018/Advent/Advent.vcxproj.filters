@@ -9,25 +9,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Input">
+      <UniqueIdentifier>{54937dc9-f692-4af8-a51c-c3ae04bbb1b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Day1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Day2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Day3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Day4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileHelper.h">
@@ -36,7 +23,7 @@
     <ClInclude Include="DateTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day5.h">
+    <ClInclude Include="advent2018.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,34 +31,32 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Advent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Day1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Day2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Day3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FileHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Day4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DateTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Day5.cpp">
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Day01.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Day02.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Day03.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Day04.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Day05.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\input.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <Text Include="Input\day01.txt" />
   </ItemGroup>
 </Project>
