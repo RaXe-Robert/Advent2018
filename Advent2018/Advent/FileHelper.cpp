@@ -11,18 +11,18 @@
 TODO: Generics?
 */
 
-vector<string> FileHelper::ReadFileToStringVector(string filepath)
+std::vector<std::string> FileHelper::ReadFileToStringVector(std::string filepath)
 {
 
-	ifstream inFile(filepath);
+	std::ifstream inFile(filepath);
 
 	if (!inFile) {
-		cerr << "Unable to open file @" << filepath << endl;
+		std::cerr << "Unable to open file @" << filepath << std::endl;
 	}
 
 	// Map file to vector for convenience
-	string line;
-	vector<string> data;
+	std::string line;
+	std::vector<std::string> data;
 	while (getline(inFile, line)) {
 		data.push_back(line);
 	}
@@ -32,17 +32,17 @@ vector<string> FileHelper::ReadFileToStringVector(string filepath)
 	return data;
 }
 
-vector<int> FileHelper::ReadFileToIntVector(string filepath)
+std::vector<int> FileHelper::ReadFileToIntVector(std::string filepath)
 {
-	ifstream inFile(filepath, true);
+	std::ifstream inFile(filepath, true);
 
 	if (!inFile) {
-		cerr << "Unable to open file @" << filepath << endl;
+		std::cerr << "Unable to open file @" << filepath << std::endl;
 	}
 
 	// Map file to vector for convenience
-	string line;
-	vector<int> data;
+	std::string line;
+	std::vector<int> data;
 	while (getline(inFile, line)) {
 		data.push_back(stoi(line));
 	}
@@ -52,16 +52,16 @@ vector<int> FileHelper::ReadFileToIntVector(string filepath)
 	return data;
 }
 
-string FileHelper::ReadFileToString(string filepath)
+std::string FileHelper::ReadFileToString(std::string filepath)
 {
-	ifstream inFile(filepath, true);
+	std::ifstream inFile(filepath, true);
 
 	if (!inFile) {
-		cerr << "Unable to open file @" << filepath << endl;
+		std::cerr << "Unable to open file @" << filepath << std::endl;
 	}
 
-	string line;
-	string data;
+	std::string line;
+	std::string data;
 	while (getline(inFile, line)) {
 		data += line;
 	}

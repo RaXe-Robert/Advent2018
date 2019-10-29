@@ -1,7 +1,5 @@
 #include "DateTime.h"
 
-using namespace std;
-
 DateTime::DateTime()
 {
 	this->year = 0;

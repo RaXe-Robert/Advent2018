@@ -8,8 +8,6 @@
 #include <regex>
 #include <map>
 
-using namespace std;
-
 /*
 https://adventofcode.com/2018/day/3
 */
@@ -25,14 +23,14 @@ void day03(input_t input)
 
 void part1()
 {
-	cout << "Day3 part 1" << endl;
+	std::cout << "Day3 part 1" << std::endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
+	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
 
-	regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
-	smatch base_match;
+	std::regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
+	std::smatch base_match;
 
-	map<int, map<int, int>> fabricClaims;
+	std::map<int, std::map<int, int>> fabricClaims;
 	for (auto& line : data) {
 		if (regex_match(line, base_match, base_regex))
 		{
@@ -45,14 +43,14 @@ void part1()
 				auto it = fabricClaims.find(x);
 
 				if (it == fabricClaims.end())
-					fabricClaims.insert(make_pair(x, map<int, int>()));
+					fabricClaims.insert(std::make_pair(x, std::map<int, int>()));
 
-				map<int, int>& row = fabricClaims.at(x);
+				std::map<int, int>& row = fabricClaims.at(x);
 				for (int y = dataY; y < maxY; y++) {
 
 					auto rowIt = row.find(y);
 					if (rowIt == row.end())
-						row.insert(make_pair(y, 1));
+						row.insert(std::make_pair(y, 1));
 					else
 						rowIt->second += 1;
 				}
@@ -69,21 +67,21 @@ void part1()
 		}
 	}
 
-	cout << "Answer: " << count << endl;
+	std::cout << "Answer: " << count << std::endl;
 }
 
 void part2()
 {
-	cout << "Day3 part 2" << endl;
+	std::cout << "Day3 part 2" << std::endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
+	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
 
-	regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
-	smatch base_match;
+	std::regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
+	std::smatch base_match;
 
-	map<int, bool> numberHasOverlap;
+	std::map<int, bool> numberHasOverlap;
 
-	map<int, map<int, vector<int>>> fabricClaims;
+	std::map<int, std::map<int, std::vector<int>>> fabricClaims;
 	for (auto& line : data) {
 		if (regex_match(line, base_match, base_regex)) {
 			int number = stoi(base_match[1]);
@@ -94,17 +92,17 @@ void part2()
 
 			for (int x = dataX; x < maxX; x++) {
 				if (fabricClaims.find(x) == fabricClaims.end())
-					fabricClaims.insert(make_pair(x, map<int, vector<int>>()));
+					fabricClaims.insert(std::make_pair(x, std::map<int, std::vector<int>>()));
 
-				map<int, vector<int>>& row = fabricClaims.at(x);
+				std::map<int, std::vector<int>>& row = fabricClaims.at(x);
 				for (int y = dataY; y < maxY; y++) {
 					if (row.find(y) == row.end())
-						row.insert(make_pair(y, vector<int>()));
+						row.insert(std::make_pair(y, std::vector<int>()));
 	
 					if (numberHasOverlap.find(number) == numberHasOverlap.end())
-						numberHasOverlap.insert(make_pair(number, false));
+						numberHasOverlap.insert(std::make_pair(number, false));
 
-					vector<int>& column = row.at(y);
+					std::vector<int>& column = row.at(y);
 					column.push_back(number);
 
 					if (column.size() > 1) {
@@ -119,6 +117,6 @@ void part2()
 
 	for (auto& number : numberHasOverlap) {
 		if (!number.second)
-			cout << "Answer: " << number.first << endl;
+			std::cout << "Answer: " << number.first << std::endl;
 	}
 }

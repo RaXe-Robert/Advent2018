@@ -5,24 +5,21 @@
 #include <string>
 #include <locale>
 
-using namespace std;
-
-
 static int solvePolymer(std::string polymer);
 static std::string excludeCharacter(std::string polymer, char character);
 
 void day05(input_t input)
 {
-	string polymer = FileHelper::ReadFileToString("./input/day05.txt");
-	vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	std::string polymer = FileHelper::ReadFileToString("./input/day05.txt");
+	std::vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 	int result = solvePolymer(polymer);
-	cout << "(Part 1) Answer: " << result << endl;
+	std::cout << "(Part 1) Answer: " << result << std::endl;
 
 	int smallestResult = result;
 	char bestCharacter;
 	for (auto& character : characters) {
-		string modifiedPolymer = excludeCharacter(polymer, character);
+		std::string modifiedPolymer = excludeCharacter(polymer, character);
 		result = solvePolymer(modifiedPolymer);
 
 		if (result <= smallestResult) {
@@ -30,14 +27,15 @@ void day05(input_t input)
 			bestCharacter = character;
 		}
 
-		cout << "(Part2) " << character << ", result: " << result << endl;
+		std::cout << "(Part2) " << character << ", result: " << result << std::endl;
 	}
-	cout << "(Part2) Answer: " << bestCharacter << ", with: " << smallestResult << endl;
+
+	std::cout << "(Part2) Answer: " << bestCharacter << ", with: " << smallestResult << std::endl;
 }
 
-int solvePolymer(string polymer)
+int solvePolymer(std::string polymer)
 {
-	locale loc;
+	std::locale loc;
 
 	bool noMoreOccurencess = false;
 	while (!noMoreOccurencess) {
@@ -59,9 +57,9 @@ int solvePolymer(string polymer)
 	return polymer.size();
 }
 
-string excludeCharacter(string polymer, char character)
+std::string excludeCharacter(std::string polymer, char character)
 {
-	locale loc;
+	std::locale loc;
 
 	for (int i = polymer.size() - 1; i >= 0; i--) {
 		if (tolower(polymer[i], loc) == character)

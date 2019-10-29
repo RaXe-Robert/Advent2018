@@ -10,17 +10,15 @@
 #include <map>
 #include <chrono>
 
-using namespace std;
-
 /*
 https://adventofcode.com/2018/day/4
 */
 struct GuardAction {
 	int guardId;
 	DateTime dateTime;
-	string action;
+	std::string action;
 
-	GuardAction(int guardId, DateTime dateTime, string action) {
+	GuardAction(int guardId, DateTime dateTime, std::string action) {
 		this->guardId = guardId;
 		this->dateTime = dateTime;
 		this->action = action;
@@ -31,7 +29,7 @@ struct GuardAction {
 
 struct Guard {
 	int guardId;
-	vector<int> asleep;
+	std::vector<int> asleep;
 
 	Guard(int guardId) {
 		this->guardId = guardId;
@@ -49,16 +47,16 @@ struct Guard {
 
 void day04(input_t input)
 {
-	cout << "Day4 part 1" << endl;
+	std::cout << "Day4 part 1" << std::endl;
 
-	vector<string> data = FileHelper::ReadFileToStringVector("./input/day04.txt");
+	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day04.txt");
 
-	regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
-	regex guard_regex("(\\w+) \\#(\\d+)");
+	std::regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
+	std::regex guard_regex("(\\w+) \\#(\\d+)");
 
-	vector<GuardAction> guardActions;
+	std::vector<GuardAction> guardActions;
 
-	smatch base_match;
+	std::smatch base_match;
 	for (auto& line : data) {
 		if (!regex_search(line, base_match, dateTime_regex))
 			continue;
@@ -68,9 +66,9 @@ void day04(input_t input)
 		int day = stoi(base_match[3]);
 		int hour = stoi(base_match[4]);
 		int minute = stoi(base_match[5]);
-		string action = base_match[6];
+		std::string action = base_match[6];
 
-		smatch guard_match;
+		std::smatch guard_match;
 		if (regex_search(action, guard_match, guard_regex))
 			guardActions.push_back(GuardAction(stoi(guard_match[2]), DateTime(year, month, day, hour, minute), "begins shift"));
 		else
@@ -81,13 +79,13 @@ void day04(input_t input)
 		return i.dateTime <= j.dateTime;
 	});
 
-	map<int, Guard> guards;
+	std::map<int, Guard> guards;
 	int currentGuard;
 	int startedSleeping;
 	for (auto& x : guardActions) {
 		if (x.guardId != -1) {
 			if (guards.find(x.guardId) == guards.end())
-				guards.insert(make_pair(x.guardId, Guard(x.guardId)));
+				guards.insert(std::make_pair(x.guardId, Guard(x.guardId)));
 
 			currentGuard = x.guardId;
 		}
@@ -99,7 +97,7 @@ void day04(input_t input)
 				if (it != guards.end())
 					it->second.SetAsleepTime(startedSleeping, x.dateTime.Minute());
 				else
-					cout << "Failed - sorting probably went wrong" << endl;
+					std::cout << "Failed - sorting probably went wrong" << std::endl;
 			}
 		}
 	}
@@ -123,7 +121,7 @@ void day04(input_t input)
 		}
 	}
 
-	cout << "(Part1) Answer: " << longestSleeper.guardId * longestMinute << ", Guard ID: " << longestSleeper.guardId << ", Longest minute: " << longestMinute << endl;
+	std::cout << "(Part1) Answer: " << longestSleeper.guardId * longestMinute << ", Guard ID: " << longestSleeper.guardId << ", Longest minute: " << longestMinute << std::endl;
 
 	Guard sleptLongestOnMinute;
 	int biggestDifference = 0;
@@ -147,5 +145,5 @@ void day04(input_t input)
 		}
 	}
 
-	cout << "(Part2) Answer: " << sleptLongestOnMinute.guardId * indexOfBiggestDifference << ", Guard ID: " << sleptLongestOnMinute.guardId << ", Longest minute: " << indexOfBiggestDifference << endl;
+	std::cout << "(Part2) Answer: " << sleptLongestOnMinute.guardId * indexOfBiggestDifference << ", Guard ID: " << sleptLongestOnMinute.guardId << ", Longest minute: " << indexOfBiggestDifference << std::endl;
 }
