@@ -92,14 +92,12 @@ void part2(char* data)
 
 void day02(const char* filepath, char* buffer)
 {
+	auto start = buffer;
 	auto file = fopen(filepath, "rb");
 	while (fgets(buffer, DAY2_BUFFER_SIZE, file))
 		buffer += DAY2_BUFFER_SIZE;
 	fclose(file);
 
-	// Set pointer to start
-	buffer -= (DAY2_BUFFER_SIZE * DAY2_FILE_LENGTH);
-
-	part1(buffer);
-	part2(buffer);
+	part1(start);
+	part2(start);
 }

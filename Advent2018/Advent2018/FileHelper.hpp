@@ -1,3 +1,4 @@
+/*
 std::vector<char*> ReadFileToStringVector(const char* filepath)
 {
 	auto file = fopen(filepath, "rb");
@@ -44,3 +45,4 @@ std::vector<int> ReadFileToIntVector(const char* filepath)
 
 	return data;
 }
+*/
