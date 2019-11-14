@@ -29,6 +29,9 @@
     <ClInclude Include="FileHelper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Day01.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input\day01.txt" />

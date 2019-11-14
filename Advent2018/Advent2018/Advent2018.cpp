@@ -8,20 +8,21 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <set>
 
 #define CRASH *(int*)0=0
 #define assert(expr) if (!(expr)) { fprintf(stderr, "FAILED assertion [" __FILE__ ":%i] " #expr "\n", __LINE__);  CRASH; }
 
 #include "FileHelper.hpp"
+#include "Day01.hpp"
 #include "Day02.hpp"
 
 int main()
 {
-	printf("Hello\n");
+	printf("Advent of Code 2018\n");
 
-
-	auto buffer = new char[1024 * 128];
-	day02("./input/day02.txt", buffer);
+	day01("./input/day01.txt");
+	day02("./input/day02.txt");
 
 	return 0;
 }
