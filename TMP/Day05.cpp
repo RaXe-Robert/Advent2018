@@ -5,18 +5,18 @@
 #include <string>
 #include <locale>
 
-static int solvePolymer(std::string polymer);
+static size_t solvePolymer(std::string polymer);
 static std::string excludeCharacter(std::string polymer, char character);
 
-void day05(input_t input)
+void day05(const char* filepath)
 {
-	std::string polymer = FileHelper::ReadFileToString("./input/day05.txt");
+	std::string polymer = FileHelper::ReadFileToStringVector(filepath)[0];
 	std::vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-	int result = solvePolymer(polymer);
-	std::cout << "(Part 1) Answer: " << result << std::endl;
+	auto result = solvePolymer(polymer);
+	printf("(Part 1) Answer: %zu\n", result);
 
-	int smallestResult = result;
+	size_t smallestResult = result;
 	char bestCharacter;
 	for (auto& character : characters) {
 		std::string modifiedPolymer = excludeCharacter(polymer, character);
@@ -27,20 +27,20 @@ void day05(input_t input)
 			bestCharacter = character;
 		}
 
-		std::cout << "(Part2) " << character << ", result: " << result << std::endl;
+		printf("(Part2) %c, result: %zu\n", character, result);
 	}
 
-	std::cout << "(Part2) Answer: " << bestCharacter << ", with: " << smallestResult << std::endl;
+	printf("(Part2) Answer: %c, with: %zu\n", bestCharacter, smallestResult);
 }
 
-int solvePolymer(std::string polymer)
+size_t solvePolymer(std::string polymer)
 {
 	std::locale loc;
 
 	bool noMoreOccurencess = false;
 	while (!noMoreOccurencess) {
 		bool stop = true;
-		for (int i = polymer.size() - 2; i >= 0; i--) {
+		for (size_t i = polymer.size() - 2; i >= 0; i--) {
 			// Check if same character
 			if (tolower(polymer[i], loc) != tolower(polymer[i + 1], loc))
 				continue;
@@ -61,7 +61,7 @@ std::string excludeCharacter(std::string polymer, char character)
 {
 	std::locale loc;
 
-	for (int i = polymer.size() - 1; i >= 0; i--) {
+	for (size_t i = polymer.size() - 1; i >= 0; i--) {
 		if (tolower(polymer[i], loc) == character)
 			polymer.erase(i, 1);
 	}

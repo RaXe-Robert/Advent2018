@@ -45,28 +45,28 @@ struct Guard {
 	}
 };
 
-void day04(input_t input)
+void day04(const char* filepath)
 {
-	std::cout << "Day4 part 1" << std::endl;
+	printf("Day4\n");
 
-	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day04.txt");
+	std::vector<char*> data = FileHelper::ReadFileToStringVector(filepath);
 
 	std::regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
 	std::regex guard_regex("(\\w+) \\#(\\d+)");
 
 	std::vector<GuardAction> guardActions;
 
-	std::smatch base_match;
-	for (auto& line : data) {
-		if (!regex_search(line, base_match, dateTime_regex))
+	std::cmatch match;
+	for (auto line : data) {
+		if (!std::regex_search(line, match, dateTime_regex))
 			continue;
 
-		int year = stoi(base_match[1]);
-		int month = stoi(base_match[2]);
-		int day = stoi(base_match[3]);
-		int hour = stoi(base_match[4]);
-		int minute = stoi(base_match[5]);
-		std::string action = base_match[6];
+		int year = stoi(match[1]);
+		int month = stoi(match[2]);
+		int day = stoi(match[3]);
+		int hour = stoi(match[4]);
+		int minute = stoi(match[5]);
+		std::string action = match[6];
 
 		std::smatch guard_match;
 		if (regex_search(action, guard_match, guard_regex))
@@ -97,14 +97,14 @@ void day04(input_t input)
 				if (it != guards.end())
 					it->second.SetAsleepTime(startedSleeping, x.dateTime.Minute());
 				else
-					std::cout << "Failed - sorting probably went wrong" << std::endl;
+					printf("Failed - sorting probably went wrong\n");
 			}
 		}
 	}
 
 	Guard longestSleeper;
 	int longestSleepTime = 0;
-	int longestMinute;
+	int longestMinute = -1;
 	for (auto& guard : guards) {
 		int sum = 0;
 		int currLongestMinute = 0;
@@ -121,7 +121,7 @@ void day04(input_t input)
 		}
 	}
 
-	std::cout << "(Part1) Answer: " << longestSleeper.guardId * longestMinute << ", Guard ID: " << longestSleeper.guardId << ", Longest minute: " << longestMinute << std::endl;
+	printf("(Part1) Answer: %i, Guard ID: %i, Longest minute: %i\n", longestSleeper.guardId * longestMinute, longestSleeper.guardId, longestMinute);
 
 	Guard sleptLongestOnMinute;
 	int biggestDifference = 0;
@@ -145,5 +145,5 @@ void day04(input_t input)
 		}
 	}
 
-	std::cout << "(Part2) Answer: " << sleptLongestOnMinute.guardId * indexOfBiggestDifference << ", Guard ID: " << sleptLongestOnMinute.guardId << ", Longest minute: " << indexOfBiggestDifference << std::endl;
+	printf("(Part2) Answer: %i, Guard ID: %i, Longest minute: %i\n", sleptLongestOnMinute.guardId * indexOfBiggestDifference, sleptLongestOnMinute.guardId, indexOfBiggestDifference);
 }

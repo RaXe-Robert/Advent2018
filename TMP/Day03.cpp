@@ -12,32 +12,32 @@
 https://adventofcode.com/2018/day/3
 */
 
-static void part1();
-static void part2();
+static void part1(std::vector<char*>);
+static void part2(std::vector<char*>);
 
-void day03(input_t input)
+void day03(const char* filepath)
 {
-	part1();
-	part2();
+	std::vector<char*> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
+
+	part1(data);
+	part2(data);
 }
 
-void part1()
+void part1(std::vector<char*> data)
 {
-	std::cout << "Day3 part 1" << std::endl;
+	printf("Day3 part 1\n");
 
-	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
-
-	std::regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
-	std::smatch base_match;
+	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
+	std::cmatch match;
 
 	std::map<int, std::map<int, int>> fabricClaims;
-	for (auto& line : data) {
-		if (regex_match(line, base_match, base_regex))
+	for (auto line : data) {
+		if (std::regex_match(line, match, regex))
 		{
-			int dataX = stoi(base_match[2]);
-			int dataY = stoi(base_match[3]);
-			int maxX = dataX + stoi(base_match[4]);
-			int maxY = dataY + stoi(base_match[5]);
+			int dataX = stoi(match[2]);
+			int dataY = stoi(match[3]);
+			int maxX = dataX + stoi(match[4]);
+			int maxY = dataY + stoi(match[5]);
 
 			for (int x = dataX; x < maxX; x++) {
 				auto it = fabricClaims.find(x);
@@ -67,28 +67,26 @@ void part1()
 		}
 	}
 
-	std::cout << "Answer: " << count << std::endl;
+	printf("Answer: %i\n", count);
 }
 
-void part2()
+void part2(std::vector<char*> data)
 {
-	std::cout << "Day3 part 2" << std::endl;
+	printf("Day3 part 2\n");
 
-	std::vector<std::string> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
-
-	std::regex base_regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
-	std::smatch base_match;
+	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
+	std::cmatch match;
 
 	std::map<int, bool> numberHasOverlap;
 
 	std::map<int, std::map<int, std::vector<int>>> fabricClaims;
 	for (auto& line : data) {
-		if (regex_match(line, base_match, base_regex)) {
-			int number = stoi(base_match[1]);
-			int dataX = stoi(base_match[2]);
-			int dataY = stoi(base_match[3]);
-			int maxX = dataX + stoi(base_match[4]);
-			int maxY = dataY + stoi(base_match[5]);
+		if (std::regex_match(line, match, regex)) {
+			int number = stoi(match[1]);
+			int dataX = stoi(match[2]);
+			int dataY = stoi(match[3]);
+			int maxX = dataX + stoi(match[4]);
+			int maxY = dataY + stoi(match[5]);
 
 			for (int x = dataX; x < maxX; x++) {
 				if (fabricClaims.find(x) == fabricClaims.end())
@@ -117,6 +115,6 @@ void part2()
 
 	for (auto& number : numberHasOverlap) {
 		if (!number.second)
-			std::cout << "Answer: " << number.first << std::endl;
+			printf("Answer: %i\n", number.first);
 	}
 }
