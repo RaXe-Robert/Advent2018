@@ -3,7 +3,7 @@ https://adventofcode.com/2018/day/2
 */
 
 #define DAY2_FILE_LENGTH 250
-#define DAY2_BUFFER_SIZE 28
+#define DAY2_BUFFER_SIZE 30 // 26 characters + \r\n
 
 void part1(char* data)
 {
@@ -17,15 +17,16 @@ void part1(char* data)
 	for (auto i = 0; i < DAY2_FILE_LENGTH; i++) {
 		char* line = ptr + DAY2_BUFFER_SIZE * i;
 
-		printf("[Day02][1] %s\n", line);
 		std::map<char, int> charOccurrences;
 
-		while (*line++ != '\0') {
-			auto iterator = charOccurrences.find(*line);
+		for (auto j = 0; j < DAY2_BUFFER_SIZE; j++) {
+			auto c = line[j];
+
+			auto iterator = charOccurrences.find(c);
 			if (iterator != charOccurrences.end())
-				charOccurrences[*line] += 1;
+				charOccurrences[c] += 1;
 			else
-				charOccurrences.insert(std::make_pair(*line, 1));
+				charOccurrences.insert(std::make_pair(c, 1));
 		}
 
 		bool countedDouble = false;
@@ -68,7 +69,7 @@ void part2(char* data)
 			char* line_l = ptr + DAY2_BUFFER_SIZE * x;
 			char* line_r = ptr + DAY2_BUFFER_SIZE * y;
 
-			for (auto i = 0; *line_l++ != '\0'; i++) {
+			for (auto i = 0; i < DAY2_BUFFER_SIZE; i++) {
 				//std::cout << "[Day02][2] L: " << line_l[i] << " R: " << line_r[i] << std::endl;
 
 				if (line_l[i] != line_r[i])
