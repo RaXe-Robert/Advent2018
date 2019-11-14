@@ -1,31 +1,10 @@
-#include "advent2018.h"
-#include "FileHelper.h"
-
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <regex>
-#include <map>
-
 /*
 https://adventofcode.com/2018/day/3
 */
 
-static void part1(std::vector<char*>);
-static void part2(std::vector<char*>);
-
-void day03(const char* filepath)
-{
-	std::vector<char*> data = FileHelper::ReadFileToStringVector("./input/day03.txt");
-
-	part1(data);
-	part2(data);
-}
-
 void part1(std::vector<char*> data)
 {
-	printf("Day3 part 1\n");
+	printf("[Day03][1] Started\n");
 
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
@@ -67,12 +46,12 @@ void part1(std::vector<char*> data)
 		}
 	}
 
-	printf("Answer: %i\n", count);
+	printf("[Day03][1] Answer: %i\n\n", count);
 }
 
 void part2(std::vector<char*> data)
 {
-	printf("Day3 part 2\n");
+	printf("[Day03][2] Started\n");
 
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
@@ -114,7 +93,19 @@ void part2(std::vector<char*> data)
 	}
 
 	for (auto& number : numberHasOverlap) {
-		if (!number.second)
-			printf("Answer: %i\n", number.first);
+		if (!number.second) {
+			printf("[Day03][2] Answer: %i\n\n", number.first);
+			return;
+		}
 	}
+
+	printf("[Day03][2] Answer: ERROR\n\n");
+}
+
+void day03(const char* filepath)
+{
+	std::vector<char*> data = ReadFileToStringVector(filepath);
+
+	part1(data);
+	part2(data);
 }

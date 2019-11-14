@@ -1,15 +1,3 @@
-#include "advent2018.h"
-#include "FileHelper.h"
-#include "DateTime.h"
-
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <regex>
-#include <map>
-#include <chrono>
-
 /*
 https://adventofcode.com/2018/day/4
 */
@@ -47,9 +35,9 @@ struct Guard {
 
 void day04(const char* filepath)
 {
-	printf("Day4\n");
+	printf("[Day04][1] Started\n");
 
-	std::vector<char*> data = FileHelper::ReadFileToStringVector(filepath);
+	std::vector<char*> data = ReadFileToStringVector(filepath);
 
 	std::regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
 	std::regex guard_regex("(\\w+) \\#(\\d+)");
@@ -121,7 +109,9 @@ void day04(const char* filepath)
 		}
 	}
 
-	printf("(Part1) Answer: %i, Guard ID: %i, Longest minute: %i\n", longestSleeper.guardId * longestMinute, longestSleeper.guardId, longestMinute);
+	printf("[Day04][1] Answer: %i, Guard ID: %i, Longest minute: %i\n\n", longestSleeper.guardId * longestMinute, longestSleeper.guardId, longestMinute);
+
+	printf("[Day04][2] Started");
 
 	Guard sleptLongestOnMinute;
 	int biggestDifference = 0;
@@ -145,5 +135,5 @@ void day04(const char* filepath)
 		}
 	}
 
-	printf("(Part2) Answer: %i, Guard ID: %i, Longest minute: %i\n", sleptLongestOnMinute.guardId * indexOfBiggestDifference, sleptLongestOnMinute.guardId, indexOfBiggestDifference);
+	printf("[Day04][2] Answer: %i, Guard ID: %i, Longest minute: %i\n\n", sleptLongestOnMinute.guardId * indexOfBiggestDifference, sleptLongestOnMinute.guardId, indexOfBiggestDifference);
 }
