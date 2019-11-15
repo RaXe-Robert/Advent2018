@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Advent2018.cpp" />
-    <ClCompile Include="DateTime.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Day01.hpp" />
@@ -158,6 +157,8 @@
     <ClInclude Include="Day06.hpp" />
     <ClInclude Include="FileHelper.hpp" />
     <ClInclude Include="Day02.hpp" />
+    <ClInclude Include="Shared\DateTime.hpp" />
+    <ClInclude Include="Shared\Types.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input\day01.txt" />

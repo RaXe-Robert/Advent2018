@@ -1,32 +1,48 @@
-size_t solvePolymer(std::string polymer)
+struct Polymer
+{
+	char* data;
+	int32_t size;
+};
+
+Polymer solvePolymer(Polymer polymer)
 {
 	std::locale loc;
 
-	bool noMoreOccurencess = false;
-	while (!noMoreOccurencess) {
+	auto dataPtr = polymer.data;
+	int32_t* sizePtr = &polymer.size;
+
+	auto buffer = reinterpret_cast<char*>(malloc(polymer.size + 1));
+	
+	while (true) {
 		bool stop = true;
-		for (size_t i = polymer.size() - 2; i >= 0; i--) {
+
+		for (auto i = polymer.size - 2; i >= 0; i--) {
 			// Check if same character
-			if (tolower(polymer[i], loc) != tolower(polymer[i + 1], loc))
+			if (tolower(dataPtr[i], loc) != tolower(dataPtr[i + 1], loc))
 				continue;
 
-			if ((isupper(polymer[i]) && islower(polymer[i + 1]))
-				|| (islower(polymer[i]) && isupper(polymer[i + 1]))) {
-				polymer.erase(i, 2);
+			if ((isupper(dataPtr[i]) && islower(dataPtr[i + 1]))
+				|| (islower(dataPtr[i]) && isupper(dataPtr[i + 1]))) {
+				//dataPtr[i] = dataPtr[i + 2];
+				memmove(&dataPtr[i], &dataPtr[i + 2], polymer.size - i);
+				polymer.size -= 2;
 				stop = false;
 			}
 		}
-		noMoreOccurencess = stop;
+
+		if (stop)
+			break;
 	}
 
-	return polymer.size();
+	return polymer;
 }
 
 std::string excludeCharacter(std::string polymer, char character)
 {
 	std::locale loc;
 
-	for (size_t i = polymer.size() - 1; i >= 0; i--) {
+	for (auto i = polymer.size(); i >= 1; i--) {
+		printf("e%i\n", i);
 		if (tolower(polymer[i], loc) == character)
 			polymer.erase(i, 1);
 	}
@@ -36,14 +52,31 @@ std::string excludeCharacter(std::string polymer, char character)
 
 void day05(const char* filepath)
 {
-	printf("[Day05][1] Started");
-	std::string polymer = ReadFileToStringVector(filepath)[0];
+	printf("[Day05][1] Started\n");
+
+	auto file = fopen(filepath, "rb");
+	int32_t size;
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	auto buffer = reinterpret_cast<char*>(malloc(size + 1));
+	fread(buffer, 1, size, file);
+	fclose(file);
+
+	auto polymer = new Polymer{
+		buffer,
+		size
+	};
+
 	std::vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	auto result = solvePolymer(*polymer);
 
-	auto result = solvePolymer(polymer);
-	printf("[Day05][1] Answer: %zu\n\n", result);
+	// TODO: size is 1 too big since we count the \n character
+	printf("[Day05][1] Answer: %zu\n\n", result.size);
 
-	printf("[Day05][1] Started");
+	/*
+	printf("[Day05][2] Started\n");
 
 	size_t smallestResult = result;
 	char bestCharacter;
@@ -58,4 +91,5 @@ void day05(const char* filepath)
 	}
 
 	printf("[Day05][2] Answer: %c, with: %zu\n\n", bestCharacter, smallestResult);
+	*/
 }

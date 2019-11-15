@@ -13,8 +13,11 @@
 #define CRASH *(int*)0=0
 #define assert(expr) if (!(expr)) { fprintf(stderr, "FAILED assertion [" __FILE__ ":%i] " #expr "\n", __LINE__);  CRASH; }
 
+#include "Shared/Types.h"
+#include "Shared/DateTime.hpp"
+
 #include "FileHelper.hpp"
-#include "DateTime.hpp"
+
 #include "Day01.hpp"
 #include "Day02.hpp"
 #include "Day03.hpp"
@@ -29,7 +32,7 @@ int main()
 	day01("./input/day01.txt");
 	day02("./input/day02.txt");
 	day03("./input/day03.txt");
-	day04("./input/day04.txt");
+	//day04("./input/day04.txt");
 	day05("./input/day05.txt");
 	day06("./input/day06.txt");
 

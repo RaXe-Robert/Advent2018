@@ -1,18 +1,18 @@
 /*
 https://adventofcode.com/2018/day/4
 */
+
+/*
 struct GuardAction {
 	int guardId;
-	DateTime dateTime;
-	std::string action;
+	DateTime* dateTime;
+	const char* action;
 
-	GuardAction(int guardId, DateTime dateTime, std::string action) {
+	GuardAction(int guardId, DateTime* dateTime, const char* action) {
 		this->guardId = guardId;
 		this->dateTime = dateTime;
 		this->action = action;
 	}
-
-	GuardAction() : guardId(0), dateTime(DateTime()), action("") {};
 };
 
 struct Guard {
@@ -54,13 +54,23 @@ void day04(const char* filepath)
 		int day = stoi(match[3]);
 		int hour = stoi(match[4]);
 		int minute = stoi(match[5]);
-		std::string action = match[6];
+		auto action = match[6];
 
-		std::smatch guard_match;
-		if (regex_search(action, guard_match, guard_regex))
-			guardActions.push_back(GuardAction(stoi(guard_match[2]), DateTime(year, month, day, hour, minute), "begins shift"));
-		else
-			guardActions.push_back(GuardAction(-1, DateTime(year, month, day, hour, minute), action));
+		auto dateTime = new DateTime{ year, month, day, hour, minute };
+
+		std::cmatch guard_match;
+		if (std::regex_search(action, guard_match, guard_regex)) {
+			auto guardId = stoi(guard_match[2]);
+			auto guardAction = new GuardAction(guardId, dateTime, "begins shift");
+
+			guardActions.push_back(guardAction);
+		}
+		else {
+			auto guardId = -1;
+			auto guardAction = new GuardAction(guardId, dateTime, action);
+
+			guardActions.push_back(guardAction);
+		}
 	}
 
 	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) {
@@ -137,3 +147,4 @@ void day04(const char* filepath)
 
 	printf("[Day04][2] Answer: %i, Guard ID: %i, Longest minute: %i\n\n", sleptLongestOnMinute.guardId * indexOfBiggestDifference, sleptLongestOnMinute.guardId, indexOfBiggestDifference);
 }
+*/
