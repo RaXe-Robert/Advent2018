@@ -2,6 +2,7 @@
 https://adventofcode.com/2018/day/2
 */
 
+// TODO: optional, remove this so that any file would work
 #define DAY2_FILE_LENGTH 250
 #define DAY2_BUFFER_SIZE 30 // 26 characters + \r\n
 
@@ -61,17 +62,20 @@ void part2(char* data)
 			if (x == y)
 				continue;
 
-			char* result = new char[DAY2_BUFFER_SIZE];
-
 			char* line_x = dataPtr + DAY2_BUFFER_SIZE * x;
 			char* line_y = dataPtr + DAY2_BUFFER_SIZE * y;
 
+			char* result = new char[DAY2_BUFFER_SIZE];
 			int differenceCount = 0;
-			for (auto i = 0; i < DAY2_BUFFER_SIZE && differenceCount < 2; i++) {
+
+			for (auto i = 0; i < DAY2_BUFFER_SIZE; i++) {
 				if (*(line_x + i) == *(line_y + i))
 					*result++ = *(line_x + i);
 				else
 					differenceCount++;
+
+				if (differenceCount >= 2)
+					break;
 			}
 
 			if (differenceCount == 1) {

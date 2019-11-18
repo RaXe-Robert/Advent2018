@@ -10,8 +10,6 @@ Polymer solvePolymer(Polymer polymer)
 
 	auto dataPtr = polymer.data;
 	int32_t* sizePtr = &polymer.size;
-
-	auto buffer = reinterpret_cast<char*>(malloc(polymer.size + 1));
 	
 	while (true) {
 		bool stop = true;
@@ -21,9 +19,9 @@ Polymer solvePolymer(Polymer polymer)
 			if (tolower(dataPtr[i], loc) != tolower(dataPtr[i + 1], loc))
 				continue;
 
-			if ((isupper(dataPtr[i]) && islower(dataPtr[i + 1]))
-				|| (islower(dataPtr[i]) && isupper(dataPtr[i + 1]))) {
-				//dataPtr[i] = dataPtr[i + 2];
+			auto l = isupper(dataPtr[i]);
+			auto r = isupper(dataPtr[i + 1]);
+			if (l != r) {
 				memmove(&dataPtr[i], &dataPtr[i + 2], polymer.size - i);
 				polymer.size -= 2;
 				stop = false;
