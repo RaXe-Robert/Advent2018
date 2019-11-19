@@ -4,7 +4,7 @@ std::vector<char*> ReadFileToStringVector(const char* filepath)
 	assert(file);
 
 	std::vector<char*> data;
-	char buffer[100];
+	char* buffer = new char[4096];
 
 	while (!feof(file))
 	{

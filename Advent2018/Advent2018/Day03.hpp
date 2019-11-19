@@ -2,16 +2,23 @@
 https://adventofcode.com/2018/day/3
 */
 
-void part1(std::vector<char*> data)
+#define DAY3_FILE_SIZE 1323
+#define DAY3_BUFFER_SIZE 30;
+
+void part1(char* data)
 {
 	printf("[Day03][1] Started\n");
 
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
+	auto dataPtr = data;
+
 	std::map<int, std::map<int, int>> fabricClaims;
-	for (auto line : data) {
-		if (std::regex_match(line, match, regex))
+	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
+		auto line = dataPtr + i * DAY3_BUFFER_SIZE;
+		
+		if (std::regex_search(line, match, regex))
 		{
 			int dataX = stoi(match[2]);
 			int dataY = stoi(match[3]);
@@ -49,7 +56,7 @@ void part1(std::vector<char*> data)
 	printf("[Day03][1] Answer: %i\n\n", count);
 }
 
-void part2(std::vector<char*> data)
+void part2(char* data)
 {
 	printf("[Day03][2] Started\n");
 
@@ -59,7 +66,8 @@ void part2(std::vector<char*> data)
 	std::map<int, bool> numberHasOverlap;
 
 	std::map<int, std::map<int, std::vector<int>>> fabricClaims;
-	for (auto& line : data) {
+	for (auto i = 0; i < ) {
+		auto line = data[i];
 		if (std::regex_match(line, match, regex)) {
 			int number = stoi(match[1]);
 			int dataX = stoi(match[2]);
@@ -104,8 +112,23 @@ void part2(std::vector<char*> data)
 
 void day03(const char* filepath)
 {
-	std::vector<char*> data = ReadFileToStringVector(filepath);
+	auto file = fopen(filepath, "rb");
+	int32_t size;
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	fseek(file, 0, SEEK_SET);
 
-	part1(data);
-	part2(data);
+	auto buffer = reinterpret_cast<char*>(malloc(1323 * 30));
+	auto start = buffer;
+
+	while (fgets(buffer, DAY2_BUFFER_SIZE, file))
+		buffer += 30;
+	fclose(file);
+	
+	//auto data = buffer;
+
+	//std::vector<char*> data = ReadFileToStringVector(filepath);
+
+	part1(start);
+	part2(start);
 }
