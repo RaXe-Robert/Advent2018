@@ -12,38 +12,40 @@ void part1(char* data)
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
-	std::map<int, std::map<int, int>> fabricClaims;
+	std::map<int, std::map<int, int>> claims;
 	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
 		auto line = data + i * DAY3_BUFFER_SIZE;
 		
 		if (!std::regex_search(line, match, regex))
 			continue;
 
-		int dataX = stoi(match[2]);
-		int dataY = stoi(match[3]);
-		int maxX = dataX + stoi(match[4]);
-		int maxY = dataY + stoi(match[5]);
+		int x_start = stoi(match[2]);
+		int y_start = stoi(match[3]);
+		int x_end = x_start + stoi(match[4]);
+		int y_end = y_start + stoi(match[5]);
 
-		for (auto x = dataX; x < maxX; x++) {
-			auto it = fabricClaims.find(x);
+		for (auto x = x_start; x < x_end; x++) {
+			auto it = claims.find(x);
 
-			if (it == fabricClaims.end())
-				fabricClaims.insert(std::make_pair(x, std::map<int, int>()));
+			if (it == claims.end())
+				claims.insert(std::make_pair(x, std::map<int, int>()));
 
-			std::map<int, int>& row = fabricClaims.at(x);
-			for (auto y = dataY; y < maxY; y++) {
+			auto& row = claims.at(x);
+			for (auto y = y_start; y < y_end; y++) {
 				auto rowIt = row.find(y);
-				if (rowIt == row.end())
-					row.insert(std::make_pair(y, 1));
+				if (rowIt == row.end()) {
+					auto pair = std::make_pair(y, 1);
+					row.insert(pair);
+				}
 				else
-					rowIt->second += 1;
+					(*rowIt).second += 1;
 			}
 		}
 	}
 	
 	int count = 0;
 
-	for (auto x : fabricClaims) {
+	for (auto x : claims) {
 		for (auto y : x.second) {
 			if (y.second >= 2)
 				count++;
@@ -60,52 +62,54 @@ void part2(char* data)
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
-	std::map<int, bool> numberHasOverlap;
+	std::map<int, bool> claimsOverlap;
+	std::map<int, std::map<int, std::vector<int>>> claims;
 
-	std::map<int, std::map<int, std::vector<int>>> fabricClaims;
 	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
 		auto line = data + i * DAY3_BUFFER_SIZE;
 
 		if (!std::regex_search(line, match, regex))
 			continue;
 
-		int number = stoi(match[1]);
-		int dataX = stoi(match[2]);
-		int dataY = stoi(match[3]);
-		int maxX = dataX + stoi(match[4]);
-		int maxY = dataY + stoi(match[5]);
+		int claimId = stoi(match[1]);
+		int x_start = stoi(match[2]);
+		int y_start = stoi(match[3]);
+		int x_end = x_start + stoi(match[4]);
+		int y_end = y_start + stoi(match[5]);
 
-		for (int x = dataX; x < maxX; x++) {
-			if (fabricClaims.find(x) == fabricClaims.end()) {
-				auto pair = std::make_pair(x, std::map<int, std::vector<int>>());
-				fabricClaims.insert(pair);
+		for (auto x = x_start; x < x_end; x++) {
+			if (claims.find(x) == claims.end()) {
+				auto col = std::map<int, std::vector<int>>();
+				auto pair = std::make_pair(x, col);
+				claims.insert(pair);
 			}
 
-			std::map<int, std::vector<int>>& row = fabricClaims.at(x);
-			for (int y = dataY; y < maxY; y++) {
-				if (row.find(y) == row.end()) {
-					auto pair = std::make_pair(y, std::vector<int>());
-					row.insert(pair);
+			auto& col = claims.at(x);
+			for (auto y = y_start; y < y_end; y++) {
+				if (col.find(y) == col.end()) {
+					auto row = std::vector<int>();
+					auto pair = std::make_pair(y, row);
+					col.insert(pair);
 				}
 	
-				if (numberHasOverlap.find(number) == numberHasOverlap.end()) {
-					auto pair = std::make_pair(number, false);
-					numberHasOverlap.insert(pair);
+				if (claimsOverlap.find(claimId) == claimsOverlap.end()) {
+					auto pair = std::make_pair(claimId, false);
+					claimsOverlap.insert(pair);
 				}
 
-				std::vector<int>& column = row.at(y);
-				column.push_back(number);
+				auto& claim = col.at(y);
+				claim.push_back(claimId);
 
-				if (column.size() > 1) {
-					for (auto& value : column) {
-						numberHasOverlap.find(value)->second = true;
+				if (claim.size() > 1) {
+					for (auto value : claim) {
+						claimsOverlap.find(value)->second = true;
 					}
 				}
 			}
 		}
 	}
 
-	for (auto number : numberHasOverlap) {
+	for (auto number : claimsOverlap) {
 		if (!number.second) {
 			printf("[Day03][2] Answer: %i\n\n", number.first);
 			return;
