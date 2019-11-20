@@ -62,8 +62,11 @@ void part2(char* data)
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
+	// Todo we could just remove overlapping claims so only claims that don't overlap remain
+	// == we wouldn't have to loop at the end and we can make this a set
 	std::map<int, bool> claimsOverlap;
-	std::map<int, std::map<int, std::vector<int>>> claims;
+	// int's are respectively: x, y, claimId
+	std::map<int, std::map<int, int>> claims;
 
 	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
 		auto line = data + i * DAY3_BUFFER_SIZE;
@@ -79,30 +82,34 @@ void part2(char* data)
 
 		for (auto x = x_start; x < x_end; x++) {
 			if (claims.find(x) == claims.end()) {
-				auto col = std::map<int, std::vector<int>>();
-				auto pair = std::make_pair(x, col);
+				auto pair = std::make_pair(x, std::map<int, int>());
 				claims.insert(pair);
 			}
 
 			auto& col = claims.at(x);
 			for (auto y = y_start; y < y_end; y++) {
 				if (col.find(y) == col.end()) {
-					auto row = std::vector<int>();
-					auto pair = std::make_pair(y, row);
-					col.insert(pair);
-				}
-	
-				if (claimsOverlap.find(claimId) == claimsOverlap.end()) {
-					auto pair = std::make_pair(claimId, false);
-					claimsOverlap.insert(pair);
-				}
+					auto claimPair = std::make_pair(y, claimId);
+					col.insert(claimPair);
 
-				auto& claim = col.at(y);
-				claim.push_back(claimId);
+					auto claimOverlapPair = std::make_pair(claimId, false);
+					claimsOverlap.insert(claimOverlapPair);
+				}
+				else {
+					auto existingClaimId = col.at(y);
+					if (claimId == existingClaimId)
+						continue;
 
-				if (claim.size() > 1) {
-					for (auto value : claim) {
-						claimsOverlap.find(value)->second = true;
+					// Mark existing claim as overlapping
+					claimsOverlap.find(existingClaimId)->second = true;
+					
+					// Mark current claim as overlapping
+					auto val = claimsOverlap.find(claimId);
+					if (val != claimsOverlap.end())
+						val->second = true;
+					else {
+						auto claimOverlapPair = std::make_pair(claimId, true);
+						claimsOverlap.insert(claimOverlapPair);
 					}
 				}
 			}
