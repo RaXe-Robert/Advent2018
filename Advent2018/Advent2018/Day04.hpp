@@ -2,32 +2,35 @@
 https://adventofcode.com/2018/day/4
 */
 
-/*
-struct GuardAction {
-	int guardId;
-	DateTime* dateTime;
+struct GuardAction 
+{
+	s32 guardId;
+	DateTime dateTime;
 	const char* action;
 
-	GuardAction(int guardId, DateTime* dateTime, const char* action) {
+	GuardAction(s32 guardId, DateTime dateTime, const char* action) 
+	{
 		this->guardId = guardId;
 		this->dateTime = dateTime;
 		this->action = action;
 	}
 };
 
-struct Guard {
-	int guardId;
-	std::vector<int> asleep;
+struct Guard 
+{
+	s32 id;
+	std::vector<s32> asleep;
 
-	Guard(int guardId) {
-		this->guardId = guardId;
+	Guard(s32 guardId) 
+	{
+		this->id = guardId;
 		this->asleep.resize(60, 0);
 	}
 
-	Guard() : guardId(0) {};
+	Guard() : id(0) {};
 
-	// Result is incremental on current values
-	void SetAsleepTime(int from, int to) {
+	void setAsleepTime(int from, int to)
+	{
 		for (int i = from; i < to; i++)
 			asleep[i]++;
 	}
@@ -35,8 +38,6 @@ struct Guard {
 
 void day04(const char* filepath)
 {
-	printf("[Day04][1] Started\n");
-
 	std::vector<char*> data = ReadFileToStringVector(filepath);
 
 	std::regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
@@ -54,46 +55,66 @@ void day04(const char* filepath)
 		int day = stoi(match[3]);
 		int hour = stoi(match[4]);
 		int minute = stoi(match[5]);
-		auto action = match[6];
 
-		auto dateTime = new DateTime{ year, month, day, hour, minute };
+		auto str = match[6].str();
+
+		char* action = new char[str.size() + 1];
+		std::copy(str.begin(), str.end(), action);
+		action[str.size()] = '\0';
+
+		auto dateTime = new DateTime;
+		dateTime->year = year;
+		dateTime->month = month;
+		dateTime->day = day;
+		dateTime->hour = hour;
+		dateTime->minute = minute;
 
 		std::cmatch guard_match;
 		if (std::regex_search(action, guard_match, guard_regex)) {
 			auto guardId = stoi(guard_match[2]);
-			auto guardAction = new GuardAction(guardId, dateTime, "begins shift");
+			auto guardAction = new GuardAction(guardId, *dateTime, "begins shift");
 
-			guardActions.push_back(guardAction);
+			guardActions.push_back(*guardAction);
 		}
 		else {
 			auto guardId = -1;
-			auto guardAction = new GuardAction(guardId, dateTime, action);
+			auto guardAction = new GuardAction(guardId, *dateTime, action);
 
-			guardActions.push_back(guardAction);
+			guardActions.push_back(*guardAction);
 		}
 	}
 
 	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) {
-		return i.dateTime <= j.dateTime;
+		return SmallerOrEqual(i.dateTime, j.dateTime);
 	});
 
-	std::map<int, Guard> guards;
-	int currentGuard;
-	int startedSleeping;
-	for (auto& x : guardActions) {
-		if (x.guardId != -1) {
-			if (guards.find(x.guardId) == guards.end())
-				guards.insert(std::make_pair(x.guardId, Guard(x.guardId)));
+	std::map<s32, Guard> guardsMap;
+	s32 currentGuard;
+	s32 startedSleeping;
+	for (auto guardAction : guardActions) 
+	{ 
+		if (guardAction.guardId != -1) 
+		{
+			if (guardsMap.find(guardAction.guardId) == guardsMap.end()) 
+			{
+				auto guard = new Guard(guardAction.guardId);
+				auto pair = std::make_pair(guardAction.guardId, *guard);
+				guardsMap.insert(pair);
+			}
 
-			currentGuard = x.guardId;
+			currentGuard = guardAction.guardId;
 		}
-		else {
-			if (x.action == "falls asleep")
-				startedSleeping = x.dateTime.Minute();
-			else if (x.action == "wakes up") {
-				auto it = guards.find(currentGuard);
-				if (it != guards.end())
-					it->second.SetAsleepTime(startedSleeping, x.dateTime.Minute());
+		else 
+		{
+			if (strcmp(guardAction.action, "falls asleep") == 0)
+				startedSleeping = guardAction.dateTime.minute;
+			else if (strcmp(guardAction.action, "wakes up") == 0)
+			{
+				auto it = guardsMap.find(currentGuard);
+				if (it != guardsMap.end())
+				{
+					it->second.setAsleepTime(startedSleeping, guardAction.dateTime.minute);
+				}
 				else
 					printf("Failed - sorting probably went wrong\n");
 			}
@@ -101,50 +122,61 @@ void day04(const char* filepath)
 	}
 
 	Guard longestSleeper;
-	int longestSleepTime = 0;
-	int longestMinute = -1;
-	for (auto& guard : guards) {
-		int sum = 0;
-		int currLongestMinute = 0;
+	s32 longestSleepTime = 0;
+	s32 longestMinute = -1;
+	for (auto guardEntry : guardsMap) 
+	{
+		auto guard = guardEntry.second;
 
-		for (int i = 0; i < guard.second.asleep.size(); i++) {
-			sum += guard.second.asleep[i];
-			if (guard.second.asleep[i] > guard.second.asleep[currLongestMinute])
+		s32 sum = 0;
+		s32 currLongestMinute = 0;
+
+		for (size_t i = 0; i < guard.asleep.size(); i++)
+		{
+			sum += guard.asleep[i];
+			if (guard.asleep[i] > guard.asleep[currLongestMinute])
 				currLongestMinute = i;
 		}
+
 		if (sum > longestSleepTime) {
 			longestSleepTime = sum;
-			longestSleeper = guard.second;
+			longestSleeper = guard;
 			longestMinute = currLongestMinute;
 		}
 	}
 
-	printf("[Day04][1] Answer: %i, Guard ID: %i, Longest minute: %i\n\n", longestSleeper.guardId * longestMinute, longestSleeper.guardId, longestMinute);
-
-	printf("[Day04][2] Started");
+	printf("[Day04][1] Answer: %i, Guard ID: %i, Longest minute: %i\n", longestSleeper.id * longestMinute, longestSleeper.id, longestMinute);
 
 	Guard sleptLongestOnMinute;
 	int biggestDifference = 0;
 	int indexOfBiggestDifference = 0;
-	for (int i = 0; i < 60; i++) {		
+	for (int i = 0; i < 60; i++) 
+	{
 		int indexOfSecondHighest = -1;
 		int idOfHighest = -1;
 		
-		for (auto& guard : guards) {
-			if (idOfHighest == -1 || guard.second.asleep[i] >= guards.at(idOfHighest).asleep[i]) {
+		for (auto guardEntry : guardsMap) 
+		{
+			auto guard = guardEntry.second;
+
+			if (idOfHighest == -1 || guardEntry.second.asleep[i] >= guardsMap.find(idOfHighest)->second.asleep[i])
+			{
 				indexOfSecondHighest = idOfHighest;
-				idOfHighest = guard.second.guardId;
+				idOfHighest = guardEntry.second.id;
 			}
 		}
 
-		int difference = guards.at(idOfHighest).asleep[i] - guards.at(indexOfSecondHighest).asleep[i];
-		if (difference >= biggestDifference) {
+		Guard highest = guardsMap.find(idOfHighest)->second;
+		Guard secondHighest = guardsMap.find(indexOfSecondHighest)->second;
+
+		int difference = highest.asleep[i] - secondHighest.asleep[i];
+		if (difference >= biggestDifference) 
+		{
 			sleptLongestOnMinute = idOfHighest;
 			biggestDifference = difference;
 			indexOfBiggestDifference = i;
 		}
 	}
 
-	printf("[Day04][2] Answer: %i, Guard ID: %i, Longest minute: %i\n\n", sleptLongestOnMinute.guardId * indexOfBiggestDifference, sleptLongestOnMinute.guardId, indexOfBiggestDifference);
+	printf("[Day04][2] Answer: %i, Guard ID: %i, Longest minute: %i\n", sleptLongestOnMinute.id * indexOfBiggestDifference, sleptLongestOnMinute.id, indexOfBiggestDifference);
 }
-*/

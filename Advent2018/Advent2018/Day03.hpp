@@ -5,73 +5,74 @@ https://adventofcode.com/2018/day/3
 #define DAY3_FILE_SIZE 1323
 #define DAY3_BUFFER_SIZE 30
 
-struct claim {
-	s16 id;
-	s16 x_start;
-	s16 x_end;
-	s16 y_start;
-	s16 y_end;
+constexpr s32 GRID_SIZE = 1000;
+
+struct claim
+{
+	s32 id;
+	s32 x_start;
+	s32 x_end;
+	s32 y_start;
+	s32 y_end;
 };
 
 void part1(claim claims[])
 {
-	printf("[Day03][1] Started\n");
-
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
-	s16* claimGrid = new s16[1000 * 1000];
-	memset(claimGrid, 0, sizeof(s16) * 1000 * 1000);
+	s32* claimGrid = new s32[GRID_SIZE * GRID_SIZE];
+	memset(claimGrid, 0, sizeof(s32) * GRID_SIZE * GRID_SIZE);
 
 	int count = 0;
-
-	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
+	for (auto i = 0; i < DAY3_FILE_SIZE; i++)
+	{
 		auto claim = claims[i];
-
-		for (auto x = claim.x_start; x < claim.x_end; x++) {
-			for (auto y = claim.y_start; y < claim.y_end; y++) {
-				auto tile = claimGrid + (x * 1000 + y);
-				*tile += 1;
-				if (*tile == 2)
-					count++;		
-			}
+		for (auto x = claim.x_start; x < claim.x_end; x++)
+		for (auto y = claim.y_start; y < claim.y_end; y++)
+		{
+			auto& tile = claimGrid[x * GRID_SIZE + y];
+			tile += 1;
+			if (tile == 2)
+				count++;	
 		}
 	}
 
-	printf("[Day03][1] Answer: %i\n\n", count);
+	delete[] claimGrid;
+	printf("[Day03][1] Answer: %i\n", count);
 }
 
 void part2(claim claims[])
 {
-	printf("[Day03][2] Started\n");
-
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
 	std::set<int> noOverlap;
 
-	s16* claimGrid = new s16[1000 * 1000];
-	memset(claimGrid, -1, sizeof(s16) * 1000 * 1000);
+	s32* claimGrid = new s32[GRID_SIZE * GRID_SIZE];
+	memset(claimGrid, -1, sizeof(s32) * GRID_SIZE * GRID_SIZE);
 
-	for (auto i = 0; i < DAY3_FILE_SIZE; i++) {
+	for (auto i = 0; i < DAY3_FILE_SIZE; i++) 
+	{
 		auto claim = claims[i];
 		noOverlap.insert(claim.id);
 
-		for (auto x = claim.x_start; x < claim.x_end; x++) {
-			for (auto y = claim.y_start; y < claim.y_end; y++) {
-				auto existingClaimId = claimGrid[x * 1000 + y];
+		for (auto x = claim.x_start; x < claim.x_end; x++)
+		for (auto y = claim.y_start; y < claim.y_end; y++)
+		{
+			auto existingClaimId = claimGrid[x * GRID_SIZE + y];
 
-				if (existingClaimId == -1)
-					claimGrid[x * 1000 + y] = claim.id;
-				else {
-					noOverlap.erase(existingClaimId);
-					noOverlap.erase(claim.id);
-				}
+			if (existingClaimId == -1)
+				claimGrid[x * GRID_SIZE + y] = claim.id;
+			else 
+			{
+				noOverlap.erase(existingClaimId);
+				noOverlap.erase(claim.id);
 			}
 		}
 	}
 
-	printf("[Day03][2] Answer: %i\n\n", *noOverlap.begin());
+	printf("[Day03][2] Answer: %i\n", *noOverlap.begin());
 }
 
 void day03(const char* filepath)

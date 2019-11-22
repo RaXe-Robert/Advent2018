@@ -46,7 +46,7 @@ int main()
 	day01::day01("./input/day01.txt");
 	day02::day02("./input/day02.txt");
 	day03::day03("./input/day03.txt");
-	//day04::day04("./input/day04.txt");
+	day04::day04("./input/day04.txt");
 	day05::day05("./input/day05.txt");
 	day06::day06("./input/day06.txt");
 

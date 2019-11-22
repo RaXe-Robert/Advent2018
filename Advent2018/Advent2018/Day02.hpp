@@ -3,34 +3,37 @@ https://adventofcode.com/2018/day/2
 */
 
 // TODO: optional, remove this so that any file would work
-#define DAY2_FILE_LENGTH 250
-#define DAY2_BUFFER_SIZE 30 // 26 characters + \r\n
+constexpr s32 DAY2_FILE_LENGTH = 250;
+// 26 characters + \r\n;
+constexpr s32 DAY2_BUFFER_SIZE = 30;
 
 void part1(char* data)
 {
-	printf("[Day02][1] Started\n");
-
-	int doubeCounter = 0;
-	int tripleCounter = 0;
+	s32 doubeCounter = 0;
+	s32 tripleCounter = 0;
 
 	char* dataPtr = data;
 
-	for (auto i = 0; i < DAY2_FILE_LENGTH; i++) {
+	for (auto i = 0; i < DAY2_FILE_LENGTH; i++) 
+	{
 		char* line = dataPtr + DAY2_BUFFER_SIZE * i;
 
 		std::map<char, int> chars;
 		auto doubleCount = 0;
 		auto tripleCount = 0;
 
-		for (auto j = 0; j < DAY2_BUFFER_SIZE; j++) {
+		for (auto j = 0; j < DAY2_BUFFER_SIZE; j++) 
+		{
 			auto c = line[j];
 
-			if (chars.find(c) != chars.end()) {
+			if (chars.find(c) != chars.end()) 
+			{
 				auto charCount = ++chars[c];
 
 				if (charCount == 2)
 					doubleCount++;
-				else if (charCount == 3) {
+				else if (charCount == 3) 
+				{
 					tripleCount++;
 					doubleCount--;
 				}
@@ -47,46 +50,47 @@ void part1(char* data)
 			tripleCounter++;
 	}
 
-	printf("[Day02][1] Answer: %i\n\n", doubeCounter * tripleCounter);
+	printf("[Day02][1] Answer: %i\n", doubeCounter * tripleCounter);
 }
 
 void part2(char* data)
 {
-	printf("[Day02][2] Started\n");
-
 	char* dataPtr = data;
 
-	for (auto x = 0; x < DAY2_FILE_LENGTH; ++x) {
-		// Compare against all other strings, except for itself
-		for (auto y = 0; y < DAY2_FILE_LENGTH; ++y) {
-			if (x == y)
-				continue;
+	for (auto x = 0; x < DAY2_FILE_LENGTH; ++x)
+	for (auto y = 0; y < DAY2_FILE_LENGTH; ++y) 
+	{
+		if (x == y)
+			continue;
 
-			char* line_x = dataPtr + DAY2_BUFFER_SIZE * x;
-			char* line_y = dataPtr + DAY2_BUFFER_SIZE * y;
+		char* line_x = dataPtr + DAY2_BUFFER_SIZE * x;
+		char* line_y = dataPtr + DAY2_BUFFER_SIZE * y;
 
-			char* result = new char[DAY2_BUFFER_SIZE];
-			int differenceCount = 0;
+		char* result = new char[DAY2_BUFFER_SIZE];
+		int differenceCount = 0;
 
-			for (auto i = 0; i < DAY2_BUFFER_SIZE; i++) {
-				if (*(line_x + i) == *(line_y + i))
-					*result++ = *(line_x + i);
-				else
-					differenceCount++;
+		for (auto i = 0; i < DAY2_BUFFER_SIZE; i++)
+		{
+			auto char_x = line_x + i;
+			auto char_y = line_y + i;
 
-				if (differenceCount >= 2)
-					break;
-			}
+			if (*char_x == *char_y)
+				*result++ = *char_x;
+			else
+				differenceCount++;
 
-			if (differenceCount == 1) {
-				printf("[Day02][2] Answer: %s\n\n", result - DAY2_BUFFER_SIZE + differenceCount);
-				return;
-			}
+			if (differenceCount >= 2)
+				break;
 		}
 
+		if (differenceCount == 1) 
+		{
+			printf("[Day02][2] Answer: %s", result - DAY2_BUFFER_SIZE + differenceCount);
+			return;
+		}
 	}
 
-	printf("[Day02][2] Answer: ERROR\n\n");
+	printf("[Day02][2] Answer: ERROR\n");
 }
 
 void day02(const char* filepath)

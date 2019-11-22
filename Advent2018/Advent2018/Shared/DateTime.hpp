@@ -9,15 +9,7 @@ AreEqual(DateTime l, DateTime r) {
 }
 
 inline bool
-operator==(DateTime l, DateTime r) {
-	return AreEqual(l, r);
-}
-
-inline bool
-operator<=(DateTime l, DateTime r) {
-	if (AreEqual(l, r))
-		return true;
-
+SmallerOrEqual(DateTime l, DateTime r) {
 	if (l.year != r.year)
 		return l.year < r.year;
 
@@ -30,5 +22,8 @@ operator<=(DateTime l, DateTime r) {
 	if (l.hour != r.hour)
 		return l.hour < r.hour;
 
-	return l.minute < r.minute;
+	if (l.minute != r.minute)
+		return l.minute < r.minute;
+
+	return true;
 }
