@@ -50,8 +50,6 @@ std::string excludeCharacter(std::string polymer, char character)
 
 void day05(const char* filepath)
 {
-	printf("[Day05][1] Started\n");
-
 	auto file = fopen(filepath, "rb");
 	int32_t size;
 	fseek(file, 0, SEEK_END);
@@ -71,11 +69,9 @@ void day05(const char* filepath)
 	auto result = solvePolymer(*polymer);
 
 	// TODO: size is 1 too big since we count the \n character
-	printf("[Day05][1] Answer: %zu\n\n", result.size);
+	printf("[Day05][1] Answer: %zu\n", result.size);
 
 	/*
-	printf("[Day05][2] Started\n");
-
 	size_t smallestResult = result;
 	char bestCharacter;
 	for (auto& character : characters) {

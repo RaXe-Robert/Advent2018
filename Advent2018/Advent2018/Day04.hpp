@@ -2,6 +2,8 @@
 https://adventofcode.com/2018/day/4
 */
 
+constexpr s32 MINUTES_PER_HOUR = 60;
+
 struct GuardAction 
 {
 	s32 guardId;
@@ -24,7 +26,7 @@ struct Guard
 	Guard(s32 guardId) 
 	{
 		this->id = guardId;
-		this->asleep.resize(60, 0);
+		this->asleep.resize(MINUTES_PER_HOUR, 0);
 	}
 
 	Guard() : id(0) {};
@@ -46,15 +48,16 @@ void day04(const char* filepath)
 	std::vector<GuardAction> guardActions;
 
 	std::cmatch match;
-	for (auto line : data) {
+	for (auto line : data) 
+	{
 		if (!std::regex_search(line, match, dateTime_regex))
 			continue;
 
-		int year = stoi(match[1]);
-		int month = stoi(match[2]);
-		int day = stoi(match[3]);
-		int hour = stoi(match[4]);
-		int minute = stoi(match[5]);
+		s32 year = stoi(match[1]);
+		s32 month = stoi(match[2]);
+		s32 day = stoi(match[3]);
+		s32 hour = stoi(match[4]);
+		s32 minute = stoi(match[5]);
 
 		auto str = match[6].str();
 
@@ -70,13 +73,15 @@ void day04(const char* filepath)
 		dateTime->minute = minute;
 
 		std::cmatch guard_match;
-		if (std::regex_search(action, guard_match, guard_regex)) {
+		if (std::regex_search(action, guard_match, guard_regex)) 
+		{
 			auto guardId = stoi(guard_match[2]);
 			auto guardAction = new GuardAction(guardId, *dateTime, "begins shift");
 
 			guardActions.push_back(*guardAction);
 		}
-		else {
+		else 
+		{
 			auto guardId = -1;
 			auto guardAction = new GuardAction(guardId, *dateTime, action);
 
@@ -84,12 +89,13 @@ void day04(const char* filepath)
 		}
 	}
 
-	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) {
+	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) 
+	{
 		return SmallerOrEqual(i.dateTime, j.dateTime);
 	});
 
 	std::map<s32, Guard> guardsMap;
-	s32 currentGuard;
+	Guard* currentGuard = NULL;
 	s32 startedSleeping;
 	for (auto guardAction : guardActions) 
 	{ 
@@ -102,28 +108,21 @@ void day04(const char* filepath)
 				guardsMap.insert(pair);
 			}
 
-			currentGuard = guardAction.guardId;
+			currentGuard = &guardsMap.at(guardAction.guardId);
 		}
 		else 
 		{
 			if (strcmp(guardAction.action, "falls asleep") == 0)
 				startedSleeping = guardAction.dateTime.minute;
-			else if (strcmp(guardAction.action, "wakes up") == 0)
-			{
-				auto it = guardsMap.find(currentGuard);
-				if (it != guardsMap.end())
-				{
-					it->second.setAsleepTime(startedSleeping, guardAction.dateTime.minute);
-				}
-				else
-					printf("Failed - sorting probably went wrong\n");
-			}
+			else if (strcmp(guardAction.action, "wakes up") == 0 && currentGuard != NULL)
+				currentGuard->setAsleepTime(startedSleeping, guardAction.dateTime.minute);
 		}
 	}
 
 	Guard longestSleeper;
 	s32 longestSleepTime = 0;
 	s32 longestMinute = -1;
+
 	for (auto guardEntry : guardsMap) 
 	{
 		auto guard = guardEntry.second;
@@ -131,7 +130,7 @@ void day04(const char* filepath)
 		s32 sum = 0;
 		s32 currLongestMinute = 0;
 
-		for (size_t i = 0; i < guard.asleep.size(); i++)
+		for (auto i = 0; i < MINUTES_PER_HOUR; i++)
 		{
 			sum += guard.asleep[i];
 			if (guard.asleep[i] > guard.asleep[currLongestMinute])
@@ -148,31 +147,28 @@ void day04(const char* filepath)
 	printf("[Day04][1] Answer: %i, Guard ID: %i, Longest minute: %i\n", longestSleeper.id * longestMinute, longestSleeper.id, longestMinute);
 
 	Guard sleptLongestOnMinute;
-	int biggestDifference = 0;
-	int indexOfBiggestDifference = 0;
-	for (int i = 0; i < 60; i++) 
+	s32 biggestDifference = 0;
+	s32 indexOfBiggestDifference = 0;
+
+	for (auto i = 0; i < MINUTES_PER_HOUR; i++)
 	{
-		int indexOfSecondHighest = -1;
-		int idOfHighest = -1;
+		Guard highest = NULL;
+		Guard secondHighest = NULL;
 		
 		for (auto guardEntry : guardsMap) 
 		{
 			auto guard = guardEntry.second;
-
-			if (idOfHighest == -1 || guardEntry.second.asleep[i] >= guardsMap.find(idOfHighest)->second.asleep[i])
+			if (&highest == NULL || guard.asleep[i] >= highest.asleep[i])
 			{
-				indexOfSecondHighest = idOfHighest;
-				idOfHighest = guardEntry.second.id;
+				secondHighest = highest;
+				highest = guard;
 			}
 		}
 
-		Guard highest = guardsMap.find(idOfHighest)->second;
-		Guard secondHighest = guardsMap.find(indexOfSecondHighest)->second;
-
-		int difference = highest.asleep[i] - secondHighest.asleep[i];
+		s32 difference = highest.asleep[i] - secondHighest.asleep[i];
 		if (difference >= biggestDifference) 
 		{
-			sleptLongestOnMinute = idOfHighest;
+			sleptLongestOnMinute = highest;
 			biggestDifference = difference;
 			indexOfBiggestDifference = i;
 		}
