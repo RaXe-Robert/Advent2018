@@ -90,6 +90,8 @@ void day03(const char* filepath)
 		if (!std::regex_search(buffer, match, regex))
 			continue;
 
+		
+
 		int claimId = stoi(match[1]);
 		int x_start = stoi(match[2]);
 		int y_start = stoi(match[3]);

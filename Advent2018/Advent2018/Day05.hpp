@@ -9,7 +9,6 @@ Polymer solvePolymer(Polymer polymer)
 	std::locale loc;
 
 	auto dataPtr = polymer.data;
-	int32_t* sizePtr = &polymer.size;
 	
 	while (true) {
 		bool stop = true;
@@ -35,14 +34,18 @@ Polymer solvePolymer(Polymer polymer)
 	return polymer;
 }
 
-std::string excludeCharacter(std::string polymer, char character)
+Polymer excludeCharacter(Polymer polymer, char character)
 {
 	std::locale loc;
 
-	for (auto i = polymer.size(); i >= 1; i--) {
-		printf("e%i\n", i);
-		if (tolower(polymer[i], loc) == character)
-			polymer.erase(i, 1);
+	auto dataPtr = polymer.data;
+
+	for (auto i = polymer.size; i >= 1; i--) {
+		if (tolower(dataPtr[i], loc) == character)
+		{
+			memmove(&dataPtr[i], &dataPtr[i + 1], polymer.size - i);
+			polymer.size -= 1;
+		}
 	}
 
 	return polymer;
@@ -67,23 +70,20 @@ void day05(const char* filepath)
 
 	std::vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 	auto result = solvePolymer(*polymer);
-
-	// TODO: size is 1 too big since we count the \n character
-	printf("[Day05][1] Answer: %zu\n", result.size);
-
-	/*
-	size_t smallestResult = result;
+ 
+	printf("[Day05][1] Answer: %zu (todo: size is 1 too big since we count the \\n character)\n", result.size);
+	
+	s32 smallestResult = -1;
 	char bestCharacter;
 	for (auto& character : characters) {
-		std::string modifiedPolymer = excludeCharacter(polymer, character);
+		auto modifiedPolymer = excludeCharacter(*polymer, character);
 		result = solvePolymer(modifiedPolymer);
 
-		if (result <= smallestResult) {
-			smallestResult = result;
+		if (smallestResult == -1 || result.size <= smallestResult) {
+			smallestResult = result.size;
 			bestCharacter = character;
 		}
 	}
 
 	printf("[Day05][2] Answer: %c, with: %zu\n\n", bestCharacter, smallestResult);
-	*/
 }
