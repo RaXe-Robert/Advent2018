@@ -36,25 +36,26 @@ Polymer* solvePolymer(const Polymer polymer)
 	auto copy = copyPolymer(polymer);
 	auto dataPtr = copy->data;
 	
-	while (true) {
-		bool stop = true;
+	bool stop = false;
+	while (!stop) 
+	{
+		stop = true;
 
-		for (auto i = copy->size - 2; i >= 0; i--) {
+		for (auto i = copy->size - 2; i >= 0; i--) 
+		{
 			// Check if same character
 			if (to_lowercase(dataPtr[i]) != to_lowercase(dataPtr[i + 1]))
 				continue;
 
 			auto l = is_upper(dataPtr[i]);
 			auto r = is_upper(dataPtr[i + 1]);
-			if (l != r) {
+			if (l != r) 
+			{
 				memmove(&dataPtr[i], &dataPtr[i + 2], copy->size - i);
 				copy->size -= 2;
 				stop = false;
 			}
 		}
-
-		if (stop)
-			break;
 	}
 
 	return copy;
@@ -65,12 +66,13 @@ Polymer* excludeCharacter(const Polymer polymer, char character)
 	auto copy = copyPolymer(polymer);
 	auto dataPtr = copy->data;
 
-	for (auto i = copy->size; i >= 0; i--) {
-		if (to_lowercase(dataPtr[i]) == character)
-		{
-			memmove(&dataPtr[i], &dataPtr[i + 1], copy->size - i);
-			copy->size -= 1;
-		}
+	for (auto i = copy->size; i >= 0; i--) 
+	{
+		if (to_lowercase(dataPtr[i]) != character)
+			continue;
+		
+		memmove(&dataPtr[i], &dataPtr[i + 1], copy->size - i);
+		copy->size -= 1;
 	}
 
 	return copy;

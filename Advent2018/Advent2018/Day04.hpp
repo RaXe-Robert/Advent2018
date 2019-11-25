@@ -9,13 +9,6 @@ struct GuardAction
 	s32 guardId;
 	DateTime dateTime;
 	const char* action;
-
-	GuardAction(s32 guardId, DateTime dateTime, const char* action) 
-	{
-		this->guardId = guardId;
-		this->dateTime = dateTime;
-		this->action = action;
-	}
 };
 
 struct Guard 
@@ -39,59 +32,57 @@ struct Guard
 };
 
 void day04(const char* filepath)
-{
-	std::vector<char*> data = ReadFileToStringVector(filepath);
-
+{	
 	std::regex dateTime_regex("\\[(\\d+)\\-(\\d+)\\-(\\d+) (\\d+)\\:(\\d+)\\] (.*)");
+	std::cmatch match;
+
 	std::regex guard_regex("(\\w+) \\#(\\d+)");
+	std::cmatch guard_match;
 
 	std::vector<GuardAction> guardActions;
 
-	std::cmatch match;
-	for (auto line : data) 
-	{
-		if (!std::regex_search(line, match, dateTime_regex))
-			continue;
+	auto file = fopen(filepath, "rb");
+	auto buffer = reinterpret_cast<char*>(malloc(128));
 
-		s32 year = stoi(match[1]);
-		s32 month = stoi(match[2]);
-		s32 day = stoi(match[3]);
-		s32 hour = stoi(match[4]);
-		s32 minute = stoi(match[5]);
+	for (auto i = 0; fgets(buffer, 128, file); i++) 
+	{
+		if (!std::regex_search(buffer, match, dateTime_regex))
+			continue;
+		
+		auto dateTime = new DateTime;
+		dateTime->year = stoi(match[1]);
+		dateTime->month = stoi(match[2]);
+		dateTime->day = stoi(match[3]);
+		dateTime->hour = stoi(match[4]);
+		dateTime->minute = stoi(match[5]);
+
+		auto guardAction = new GuardAction;
+		guardAction->dateTime = *dateTime;
 
 		auto str = match[6].str();
-
 		char* action = new char[str.size() + 1];
 		std::copy(str.begin(), str.end(), action);
 		action[str.size()] = '\0';
 
-		auto dateTime = new DateTime;
-		dateTime->year = year;
-		dateTime->month = month;
-		dateTime->day = day;
-		dateTime->hour = hour;
-		dateTime->minute = minute;
-
-		std::cmatch guard_match;
 		if (std::regex_search(action, guard_match, guard_regex)) 
 		{
-			auto guardId = stoi(guard_match[2]);
-			auto guardAction = new GuardAction(guardId, *dateTime, "begins shift");
-
-			guardActions.push_back(*guardAction);
+			guardAction->guardId = stoi(guard_match[2]);
+			guardAction->action = "begins shift";
 		}
 		else 
 		{
-			auto guardId = -1;
-			auto guardAction = new GuardAction(guardId, *dateTime, action);
-
-			guardActions.push_back(*guardAction);
+			guardAction->guardId = -1;
+			guardAction->action = action;
 		}
+
+		guardActions.push_back(*guardAction);
 	}
+
+	fclose(file);
 
 	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) 
 	{
-		return SmallerOrEqual(i.dateTime, j.dateTime);
+		return smallerOrEqual(i.dateTime, j.dateTime);
 	});
 
 	std::map<s32, Guard> guardsMap;

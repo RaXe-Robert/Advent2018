@@ -17,10 +17,10 @@ typedef unsigned char uchar;
 union DateTime
 {
 	struct {
-		int year;
-		int month;
-		int day;
-		int hour;
-		int minute;
+		s32 year;
+		s32 month;
+		s32 day;
+		s32 hour;
+		s32 minute;
 	};
 };

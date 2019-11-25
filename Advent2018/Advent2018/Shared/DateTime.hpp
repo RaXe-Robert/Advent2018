@@ -1,5 +1,5 @@
 inline bool
-AreEqual(DateTime l, DateTime r) {
+areEqual(DateTime l, DateTime r) {
 	return (l.year == r.year
 		&& l.month == r.month
 		&& l.day == r.day
@@ -9,7 +9,7 @@ AreEqual(DateTime l, DateTime r) {
 }
 
 inline bool
-SmallerOrEqual(DateTime l, DateTime r) {
+smallerOrEqual(DateTime l, DateTime r) {
 	if (l.year != r.year)
 		return l.year < r.year;
 
