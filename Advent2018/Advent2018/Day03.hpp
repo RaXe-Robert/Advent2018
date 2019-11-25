@@ -16,12 +16,13 @@ struct claim
 	s32 y_end;
 };
 
-void part1(claim claims[])
+void day03_part1(claim claims[])
 {
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
-	s32* claimGrid = new s32[GRID_SIZE * GRID_SIZE];
+	s32* claimGrid;
+	claimGrid = (s32*)malloc(sizeof(s32) * GRID_SIZE * GRID_SIZE);
 	memset(claimGrid, 0, sizeof(s32) * GRID_SIZE * GRID_SIZE);
 
 	int count = 0;
@@ -38,18 +39,20 @@ void part1(claim claims[])
 		}
 	}
 
-	delete[] claimGrid;
+	free(claimGrid);
+
 	printf("[Day03][1] Answer: %i\n", count);
 }
 
-void part2(claim claims[])
+void day03_part2(claim claims[])
 {
 	std::regex regex("#(\\d+)...(\\d+),(\\d+):.(\\d+)x(\\d+)");
 	std::cmatch match;
 
 	std::set<int> noOverlap;
 
-	s32* claimGrid = new s32[GRID_SIZE * GRID_SIZE];
+	s32* claimGrid;
+	claimGrid = (s32*)malloc(sizeof(s32) * GRID_SIZE * GRID_SIZE);
 	memset(claimGrid, -1, sizeof(s32) * GRID_SIZE * GRID_SIZE);
 
 	for (auto i = 0; i < DAY3_FILE_SIZE; i++) 
@@ -72,6 +75,8 @@ void part2(claim claims[])
 		}
 	}
 
+	free(claimGrid);
+
 	printf("[_____][2] Answer: %i\n", *noOverlap.begin());
 }
 
@@ -82,15 +87,14 @@ void day03(const char* filepath)
 
 	auto file = fopen(filepath, "rb");
 
-	auto buffer = reinterpret_cast<char*>(malloc(DAY3_BUFFER_SIZE));
+	char* buffer;
+	buffer = (char*)malloc(sizeof(char) * DAY3_BUFFER_SIZE);
 
 	claim claims[DAY3_FILE_SIZE];
 
 	for (auto i = 0; fgets(buffer, DAY3_BUFFER_SIZE, file); i++) {
 		if (!std::regex_search(buffer, match, regex))
 			continue;
-
-		
 
 		int claimId = stoi(match[1]);
 		int x_start = stoi(match[2]);
@@ -108,6 +112,8 @@ void day03(const char* filepath)
 	}
 	fclose(file);
 
-	part1(claims);
-	part2(claims);
+	day03_part1(claims);
+	day03_part2(claims);
+
+	free(buffer);
 }

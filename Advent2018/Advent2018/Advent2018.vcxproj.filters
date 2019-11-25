@@ -39,6 +39,9 @@
     <ClInclude Include="Shared\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="day07.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input\day01.txt" />
@@ -47,6 +50,7 @@
     <Text Include="Input\day04.txt" />
     <Text Include="Input\day05.txt" />
     <Text Include="Input\day06.txt" />
+    <Text Include="Input\day07.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="advent2018.cpp">

@@ -7,7 +7,7 @@ constexpr s32 DAY2_FILE_LENGTH = 250;
 // 26 characters + \r\n;
 constexpr s32 DAY2_BUFFER_SIZE = 30;
 
-void part1(char* data)
+void day02_part1(char* data)
 {
 	s32 doubeCounter = 0;
 	s32 tripleCounter = 0;
@@ -53,7 +53,7 @@ void part1(char* data)
 	printf("[Day02][1] Answer: %i\n", doubeCounter * tripleCounter);
 }
 
-void part2(char* data)
+void day02_part2(char* data)
 {
 	char* dataPtr = data;
 
@@ -102,6 +102,8 @@ void day02(const char* filepath)
 		buffer += DAY2_BUFFER_SIZE;
 	fclose(file);
 
-	part1(start);
-	part2(start);
+	day02_part1(start);
+	day02_part2(start);
+
+	free(start);
 }

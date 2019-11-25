@@ -79,6 +79,7 @@ void day04(const char* filepath)
 	}
 
 	fclose(file);
+	free(buffer);
 
 	sort(guardActions.begin(), guardActions.end(), [](GuardAction i, GuardAction j) 
 	{

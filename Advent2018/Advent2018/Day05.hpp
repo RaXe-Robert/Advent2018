@@ -110,8 +110,10 @@ void day05(const char* filepath)
 			bestCharacter = character;
 		}
 	}
-
-	delete result;
-
+	
 	printf("[_____][2] Answer: %zu, character: %c\n\n", smallestResult, bestCharacter);
+
+	free(buffer);
+	delete polymer;
+	delete result;
 }

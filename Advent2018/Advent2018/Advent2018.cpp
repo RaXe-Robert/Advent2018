@@ -16,35 +16,25 @@
 #include "shared/types.h"
 #include "shared/dateTime.hpp"
 
-namespace day01 {
 #include "day01.hpp"
-}
-namespace day02 {
 #include "day02.hpp"
-}
-namespace day03 {
 #include "day03.hpp"
-}
-namespace day04 {
 #include "day04.hpp"
-}
-namespace day05 {
 #include "day05.hpp"
-}
-namespace day06 {
 #include "day06.hpp"
-}
+#include "day07.hpp"
 
 int main()
 {
 	printf("Advent of Code 2018\n\n");
 
-	day01::day01("./input/day01.txt");
-	day02::day02("./input/day02.txt");
-	day03::day03("./input/day03.txt");
-	day04::day04("./input/day04.txt");
-	day05::day05("./input/day05.txt");
-	day06::day06("./input/day06.txt");
+	day01("./input/day01.txt");
+	day02("./input/day02.txt");
+	day03("./input/day03.txt");
+	day04("./input/day04.txt");
+	day05("./input/day05.txt");
+	day06("./input/day06.txt");
+	day07("./input/day07.txt");
 
 	return 0;
 }
