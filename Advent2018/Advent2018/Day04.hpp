@@ -96,7 +96,7 @@ void day04(const char* filepath)
 
 	std::map<s32, Guard> guardsMap;
 	Guard* currentGuard = NULL;
-	s32 startedSleeping;
+	s32 startedSleeping = 0;
 	for (auto guardAction : guardActions) 
 	{ 
 		if (guardAction.guardId != -1) 

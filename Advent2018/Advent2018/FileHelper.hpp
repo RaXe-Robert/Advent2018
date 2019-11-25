@@ -21,26 +21,3 @@ std::vector<char*> ReadFileToStringVector(const char* filepath)
 
 	return data;
 }
-
-std::vector<int> ReadFileToIntVector(const char* filepath)
-{
-	auto file = fopen(filepath, "rb");
-	assert(file);
-
-	std::vector<int> data;
-	char buffer[100];
-
-	while (!feof(file))
-	{
-		char* line = fgets(buffer, 100, file);
-		if (line == NULL)
-			break;
-
-		int val = atoi(line);
-		data.push_back(val);
-	}
-
-	fclose(file);
-
-	return data;
-}

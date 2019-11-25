@@ -9,7 +9,6 @@
 #include <set>
 #include <algorithm>
 #include <regex>
-#include <locale>
 
 #define CRASH *(int*)0=0
 #define assert(expr) if (!(expr)) { fprintf(stderr, "FAILED assertion [" __FILE__ ":%i] " #expr "\n", __LINE__);  CRASH; }
