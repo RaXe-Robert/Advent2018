@@ -13,29 +13,26 @@
 #define CRASH *(int*)0=0
 #define assert(expr) if (!(expr)) { fprintf(stderr, "FAILED assertion [" __FILE__ ":%i] " #expr "\n", __LINE__);  CRASH; }
 
-#include "Shared/Types.h"
-#include "Shared/DateTime.hpp"
-
-#include "FileHelper.hpp"
-
+#include "shared/types.h"
+#include "shared/dateTime.hpp"
 
 namespace day01 {
-#include "Day01.hpp"
+#include "day01.hpp"
 }
 namespace day02 {
-#include "Day02.hpp"
+#include "day02.hpp"
 }
 namespace day03 {
-#include "Day03.hpp"
+#include "day03.hpp"
 }
 namespace day04 {
-#include "Day04.hpp"
+#include "day04.hpp"
 }
 namespace day05 {
-#include "Day05.hpp"
+#include "day05.hpp"
 }
 namespace day06 {
-#include "Day06.hpp"
+#include "day06.hpp"
 }
 
 int main()

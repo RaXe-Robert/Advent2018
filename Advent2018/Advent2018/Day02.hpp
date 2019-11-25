@@ -85,12 +85,12 @@ void part2(char* data)
 
 		if (differenceCount == 1) 
 		{
-			printf("[Day02][2] Answer: %s", result - DAY2_BUFFER_SIZE + differenceCount);
+			printf("[_____][2] Answer: %s", result - DAY2_BUFFER_SIZE + differenceCount);
 			return;
 		}
 	}
 
-	printf("[Day02][2] Answer: ERROR\n");
+	printf("[_____][2] Answer: ERROR\n");
 }
 
 void day02(const char* filepath)

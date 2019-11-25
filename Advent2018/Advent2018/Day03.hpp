@@ -72,7 +72,7 @@ void part2(claim claims[])
 		}
 	}
 
-	printf("[Day03][2] Answer: %i\n", *noOverlap.begin());
+	printf("[_____][2] Answer: %i\n", *noOverlap.begin());
 }
 
 void day03(const char* filepath)

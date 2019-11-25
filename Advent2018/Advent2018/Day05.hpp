@@ -113,5 +113,5 @@ void day05(const char* filepath)
 
 	delete result;
 
-	printf("[Day05][2] Answer: %zu, character: %c\n\n", smallestResult, bestCharacter);
+	printf("[_____][2] Answer: %zu, character: %c\n\n", smallestResult, bestCharacter);
 }

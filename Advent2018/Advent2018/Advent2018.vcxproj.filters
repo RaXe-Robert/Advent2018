@@ -15,36 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Advent2018.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Day02.hpp">
+    <ClInclude Include="day01.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileHelper.hpp">
+    <ClInclude Include="day02.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day01.hpp">
+    <ClInclude Include="day03.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day03.hpp">
+    <ClInclude Include="day06.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day04.hpp">
+    <ClInclude Include="day04.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day05.hpp">
+    <ClInclude Include="day05.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day06.hpp">
+    <ClInclude Include="Shared\dateTime.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shared\Types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shared\DateTime.hpp">
+    <ClInclude Include="Shared\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -55,5 +47,10 @@
     <Text Include="Input\day04.txt" />
     <Text Include="Input\day05.txt" />
     <Text Include="Input\day06.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="advent2018.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -147,18 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Advent2018.cpp" />
+    <ClCompile Include="advent2018.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Day01.hpp" />
-    <ClInclude Include="Day03.hpp" />
-    <ClInclude Include="Day04.hpp" />
-    <ClInclude Include="Day05.hpp" />
-    <ClInclude Include="Day06.hpp" />
-    <ClInclude Include="FileHelper.hpp" />
-    <ClInclude Include="Day02.hpp" />
-    <ClInclude Include="Shared\DateTime.hpp" />
-    <ClInclude Include="Shared\Types.h" />
+    <ClInclude Include="day01.hpp" />
+    <ClInclude Include="day03.hpp" />
+    <ClInclude Include="day04.hpp" />
+    <ClInclude Include="day05.hpp" />
+    <ClInclude Include="day06.hpp" />
+    <ClInclude Include="day02.hpp" />
+    <ClInclude Include="Shared\dateTime.hpp" />
+    <ClInclude Include="Shared\types.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Input\day01.txt" />

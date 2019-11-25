@@ -165,5 +165,5 @@ void day04(const char* filepath)
 		}
 	}
 
-	printf("[Day04][2] Answer: %i, Guard ID: %i, Longest minute: %i\n", sleptLongestOnMinute.id * indexOfBiggestDifference, sleptLongestOnMinute.id, indexOfBiggestDifference);
+	printf("[_____][2] Answer: %i, Guard ID: %i, Longest minute: %i\n", sleptLongestOnMinute.id * indexOfBiggestDifference, sleptLongestOnMinute.id, indexOfBiggestDifference);
 }

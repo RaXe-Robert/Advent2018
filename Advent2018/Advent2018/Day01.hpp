@@ -35,7 +35,7 @@ void day01(const char* filepath)
 		auto x = set.insert(frequency);
 		if (!x.second) 
 		{
-			printf("[Day01][2] Answer: %i\n", frequency);
+			printf("[_____][2] Answer: %i\n", frequency);
 			return;
 		}
 	}
