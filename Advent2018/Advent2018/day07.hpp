@@ -5,6 +5,17 @@ https://adventofcode.com/2018/day/7
 constexpr s32 ALPHABET_LENGTH = 26;
 constexpr s32 ASCII_OFFSET = 65;
 
+inline bool
+containsChar(char* arr, s32 size, char c)
+{
+	for (auto it = arr; *it; ++it)
+	{
+		if (*it == c)
+			return true;
+	}
+	return false;
+}
+
 void day07(const char* filepath)
 {
 	s32* steps;
@@ -24,21 +35,53 @@ void day07(const char* filepath)
 	}
 	fclose(file);
 
-	for (auto x = 0; x < ALPHABET_LENGTH; x++)
+	char* part1 = new char[ALPHABET_LENGTH + 1];
+	memset(part1, 0, sizeof(char) * ALPHABET_LENGTH);
+	part1[ALPHABET_LENGTH] = '\0';
+
+	int part1_length = 0;
+
+	for (char x = 'A'; x <= 'Z'; x++)
 	{
-		char step = x + ASCII_OFFSET;
-		printf("%c, requires: ", step);
+		auto index = x - ASCII_OFFSET;
+
+		if (containsChar(part1, part1_length, x))
+			continue;
+
+		printf("%c, requires: ", x);
+
+		bool ready = true;
+
 		for (auto y = 0; y < ALPHABET_LENGTH; y++)
 		{
-			bool required = *(steps + (x * ALPHABET_LENGTH) + y) == 1;
+			bool required = steps[(index * ALPHABET_LENGTH) + y] == 1;
 			if (required)
+			{
 				printf("%c ", y + ASCII_OFFSET);
+				ready = false;
+			}
 			else
-				printf("- ", 0);
-
+				printf("- ");
 		}
+
+		if (ready)
+		{
+			part1[part1_length] = x;
+			part1_length++;
+
+			for (auto i = 0; i < ALPHABET_LENGTH; i++)
+			{
+				steps[i * ALPHABET_LENGTH + index] = 0;
+			}
+			x = 'A' - 1;
+			printf("\n");
+		}
+
 		printf("\n");
-	} 	
+	}
+
+	printf("%s\n", part1);
+
 
 	delete buffer;
 }
