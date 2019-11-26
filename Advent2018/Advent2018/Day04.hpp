@@ -87,7 +87,7 @@ void day04(const char* filepath)
 	});
 
 	std::map<s32, Guard> guardsMap;
-	Guard* currentGuard = NULL;
+	Guard* currentGuard = 0;
 	s32 startedSleeping = 0;
 	for (auto guardAction : guardActions) 
 	{ 
@@ -106,7 +106,7 @@ void day04(const char* filepath)
 		{
 			if (strcmp(guardAction.action, "falls asleep") == 0)
 				startedSleeping = guardAction.dateTime.minute;
-			else if (strcmp(guardAction.action, "wakes up") == 0 && currentGuard != NULL)
+			else if (strcmp(guardAction.action, "wakes up") == 0 && currentGuard != 0)
 				currentGuard->setAsleepTime(startedSleeping, guardAction.dateTime.minute);
 		}
 	}
@@ -144,13 +144,13 @@ void day04(const char* filepath)
 
 	for (auto i = 0; i < MINUTES_PER_HOUR; i++)
 	{
-		Guard highest = NULL;
-		Guard secondHighest = NULL;
+		Guard highest = 0;
+		Guard secondHighest = 0;
 		
 		for (auto guardEntry : guardsMap) 
 		{
 			auto guard = guardEntry.second;
-			if (&highest == NULL || guard.asleep[i] >= highest.asleep[i])
+			if (&highest == 0 || guard.asleep[i] >= highest.asleep[i])
 			{
 				secondHighest = highest;
 				highest = guard;

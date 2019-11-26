@@ -14,7 +14,7 @@ void day01(const char* filepath)
 	while (!feof(file))
 	{
 		char* line = fgets(buffer, 32, file);
-		if (line == NULL)
+		if (line == 0)
 			break;
 
 		int val = atoi(line);

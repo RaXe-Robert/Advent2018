@@ -2,17 +2,19 @@
 https://adventofcode.com/2018/day/7
 */
 
-constexpr auto DAY7_FILE_LENGTH = 101;
-constexpr auto DAY7_BUFFER_SIZE = 64;
-
 void day07(const char* filepath)
 {
-	auto buffer = new char[DAY7_FILE_LENGTH * DAY7_BUFFER_SIZE];
-	auto start = buffer;
+	char* buffer = new char[64];
+
 	auto file = fopen(filepath, "rb");
-	while (fgets(buffer, DAY7_BUFFER_SIZE, file))
-		buffer += DAY7_BUFFER_SIZE;
+	while (fgets(buffer, 64, file)) {
+		char step = buffer[5];
+		char stepRequired = buffer[36];
+		printf("%c - %c\n", step, stepRequired);
+	}
 	fclose(file);
 
-	delete start;
+	// Read: https://stackoverflow.com/questions/26695393/c-and-when-to-use-delete
+
+	delete buffer;
 }
