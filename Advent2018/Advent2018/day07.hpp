@@ -41,43 +41,40 @@ void day07(const char* filepath)
 
 	int part1_length = 0;
 
-	for (char x = 'A'; x <= 'Z'; x++)
+	for (char x = 0; x <= ALPHABET_LENGTH; x++)
 	{
-		auto index = x - ASCII_OFFSET;
+		char c = x + ASCII_OFFSET;
 
-		if (containsChar(part1, part1_length, x))
+		if (containsChar(part1, part1_length, c))
 			continue;
 
-		printf("%c, requires: ", x);
+		printf("%c - ", c);
 
-		bool ready = true;
+		bool available = true;
 
 		for (auto y = 0; y < ALPHABET_LENGTH; y++)
 		{
-			bool required = steps[(index * ALPHABET_LENGTH) + y] == 1;
+			bool required = steps[(x * ALPHABET_LENGTH) + y] == 1;
 			if (required)
 			{
-				printf("%c ", y + ASCII_OFFSET);
-				ready = false;
+				available = false;
+				printf("requires: %c \n", y + ASCII_OFFSET);
+				break;
 			}
-			else
-				printf("- ");
 		}
 
-		if (ready)
+		if (available)
 		{
-			part1[part1_length] = x;
+			printf("available\n");
+			part1[part1_length] = c;
 			part1_length++;
 
 			for (auto i = 0; i < ALPHABET_LENGTH; i++)
-			{
-				steps[i * ALPHABET_LENGTH + index] = 0;
-			}
-			x = 'A' - 1;
+				steps[i * ALPHABET_LENGTH + x] = 0;
+
+			x = -1;
 			printf("\n");
 		}
-
-		printf("\n");
 	}
 
 	printf("%s\n", part1);
