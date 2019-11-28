@@ -27,8 +27,8 @@ void day07(const char* filepath)
 	auto file = fopen(filepath, "rb");
 	while (fgets(buffer, 64, file)) 
 	{
-		s32 step = buffer[5] - ASCII_OFFSET;
-		s32 stepRequired = buffer[36] - ASCII_OFFSET;
+		s32 stepRequired = buffer[5] - ASCII_OFFSET;
+		s32 step = buffer[36] - ASCII_OFFSET;
 
 		auto ptr = steps + (step * ALPHABET_LENGTH) + stepRequired;	
 		*ptr = 1;
@@ -41,14 +41,12 @@ void day07(const char* filepath)
 
 	int part1_length = 0;
 
-	for (char x = 0; x <= ALPHABET_LENGTH; x++)
+	for (char x = 0; x < ALPHABET_LENGTH; x++)
 	{
 		char c = x + ASCII_OFFSET;
 
 		if (containsChar(part1, part1_length, c))
 			continue;
-
-		printf("%c - ", c);
 
 		bool available = true;
 
@@ -58,14 +56,12 @@ void day07(const char* filepath)
 			if (required)
 			{
 				available = false;
-				printf("requires: %c \n", y + ASCII_OFFSET);
 				break;
 			}
 		}
 
 		if (available)
 		{
-			printf("available\n");
 			part1[part1_length] = c;
 			part1_length++;
 
@@ -73,12 +69,10 @@ void day07(const char* filepath)
 				steps[i * ALPHABET_LENGTH + x] = 0;
 
 			x = -1;
-			printf("\n");
 		}
 	}
 
-	printf("%s\n", part1);
-
+	printf("[Day07][1] Answer: %s\n", part1);
 
 	delete buffer;
 }
