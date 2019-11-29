@@ -21,7 +21,8 @@ struct Polymer
 
 Polymer* copyPolymer(const Polymer polymer)
 {
-	auto buffer = reinterpret_cast<char*>(malloc(polymer.size + 1));
+	char* buffer;
+	buffer = reinterpret_cast<char*>(malloc(polymer.size + 1));
 	memcpy(buffer, polymer.data, polymer.size);
 
 	auto result = new Polymer;
@@ -83,7 +84,7 @@ void day05(const char* filepath)
 	std::vector<char> characters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 	auto file = fopen(filepath, "rb");
-	int32_t size;
+	s32 size;
 	fseek(file, 0, SEEK_END);
 	size = ftell(file);
 	fseek(file, 0, SEEK_SET);

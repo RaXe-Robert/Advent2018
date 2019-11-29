@@ -109,30 +109,26 @@ void day07_part2(s32* steps)
 				continue;
 
 			bool available = true;
-
 			for (auto y = 0; y < ALPHABET_LENGTH; y++)
 			{
 				bool required = steps[x * ALPHABET_LENGTH + y] == 1;
 				if (required)
 					available = false;
 			}
+			if (!available)
+				continue;
 
-			if (available)
+			for (auto i = 0; i < workerCount; i++)
 			{
-				auto stepTime = 60 + (x + 1);
-
-				for (auto i = 0; i < workerCount; i++)
+				auto worker = &workers[i];
+				if (worker->task == 0)
 				{
-					auto worker = &workers[i];
-					if (worker->task == 0)
-					{
-						worker->task = c;
-						worker->duration = stepTime;
+					worker->task = c;
+					worker->duration = 60 + (x + 1);
 
-						busy[busy_length] = c;
-						busy_length++;
-						break;
-					}
+					busy[busy_length] = c;
+					busy_length++;
+					break;
 				}
 			}
 		}
@@ -163,7 +159,7 @@ void day07(const char* filepath)
 	}
 
 	fclose(file);
-	delete buffer;
+	delete[] buffer;
 
 	s32* steps2;
 	steps2 = reinterpret_cast<s32*>(malloc(sizeof(s32) * ALPHABET_LENGTH * ALPHABET_LENGTH));
